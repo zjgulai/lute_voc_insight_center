@@ -13,6 +13,14 @@ const STATIC_FILE_MAP: Record<string, string> = {
 };
 
 let _cachedVizData: VizDataset | null = null;
+let _cachedCountryInsightData: VizDataset | null = null;
+let _cachedOpportunityData: VizDataset | null = null;
+let _cachedOpportunityInternalData: VizDataset | null = null;
+
+let _vizDataPromise: Promise<VizDataset> | null = null;
+let _countryInsightPromise: Promise<VizDataset> | null = null;
+let _opportunityPromise: Promise<VizDataset> | null = null;
+let _opportunityInternalPromise: Promise<VizDataset> | null = null;
 
 async function fetchJSON<T>(path: string): Promise<T> {
   if (STATIC_MODE) {
@@ -32,8 +40,66 @@ async function fetchJSON<T>(path: string): Promise<T> {
 
 async function getVizDataCached(): Promise<VizDataset> {
   if (_cachedVizData) return _cachedVizData;
-  _cachedVizData = await fetchJSON<VizDataset>("/api/v1/research/viz-data");
-  return _cachedVizData;
+  if (!_vizDataPromise) {
+    _vizDataPromise = fetchJSON<VizDataset>("/api/v1/research/viz-data")
+      .then((data) => {
+        _cachedVizData = data;
+        return data;
+      })
+      .catch((error) => {
+        _vizDataPromise = null;
+        throw error;
+      });
+  }
+  return _vizDataPromise;
+}
+
+async function getCountryInsightDataCached(): Promise<VizDataset> {
+  if (_cachedCountryInsightData) return _cachedCountryInsightData;
+  if (!_countryInsightPromise) {
+    _countryInsightPromise = fetchJSON<VizDataset>("/api/v1/analysis/data")
+      .then((data) => {
+        _cachedCountryInsightData = data;
+        return data;
+      })
+      .catch((error) => {
+        _countryInsightPromise = null;
+        throw error;
+      });
+  }
+  return _countryInsightPromise;
+}
+
+async function getOpportunityDataCached(): Promise<VizDataset> {
+  if (_cachedOpportunityData) return _cachedOpportunityData;
+  if (!_opportunityPromise) {
+    _opportunityPromise = fetchJSON<VizDataset>("/api/v1/opportunity/data")
+      .then((data) => {
+        _cachedOpportunityData = data;
+        return data;
+      })
+      .catch((error) => {
+        _opportunityPromise = null;
+        throw error;
+      });
+  }
+  return _opportunityPromise;
+}
+
+async function getOpportunityInternalDataCached(): Promise<VizDataset> {
+  if (_cachedOpportunityInternalData) return _cachedOpportunityInternalData;
+  if (!_opportunityInternalPromise) {
+    _opportunityInternalPromise = fetchJSON<VizDataset>("/api/v1/opportunity/internal")
+      .then((data) => {
+        _cachedOpportunityInternalData = data;
+        return data;
+      })
+      .catch((error) => {
+        _opportunityInternalPromise = null;
+        throw error;
+      });
+  }
+  return _opportunityInternalPromise;
 }
 
 export interface Country {
@@ -125,9 +191,9 @@ export const api = {
   },
 
   vizData: () => fetchJSON<VizDataset>("/api/v1/research/viz-data"),
-  countryInsightData: () => fetchJSON<VizDataset>("/api/v1/analysis/data"),
-  opportunityData: () => fetchJSON<VizDataset>("/api/v1/opportunity/data"),
-  opportunityInternalData: () => fetchJSON<VizDataset>("/api/v1/opportunity/internal"),
+  countryInsightData: () => getCountryInsightDataCached(),
+  opportunityData: () => getOpportunityDataCached(),
+  opportunityInternalData: () => getOpportunityInternalDataCached(),
 
   reloadDatasets: () => STATIC_MODE
     ? Promise.resolve({ status: "static mode - no reload" })

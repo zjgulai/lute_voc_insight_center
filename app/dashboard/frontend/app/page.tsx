@@ -54,10 +54,14 @@ export default function OverviewPage() {
 
   useEffect(() => {
     Promise.all([
-      api.vizData(),
+      api.countryInsightData(),
+      api.opportunityData(),
       api.adminStatus().catch(() => null),
-    ]).then(([viz, admin]) => {
-      setData(viz);
+    ]).then(([countryInsight, opportunity, admin]) => {
+      setData({
+        ...countryInsight,
+        voc_negative: opportunity.voc_negative ?? [],
+      });
       if (admin) setTables(admin.tables);
     }).catch((e) => setError(e.message));
   }, []);
