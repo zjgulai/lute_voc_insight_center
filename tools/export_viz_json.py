@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -147,6 +148,164 @@ def split_voc_negative(voc_negative: list[dict]) -> tuple[list[dict], list[dict]
     return public_rows, internal_rows
 
 
+def build_internal_voc_summary(voc_negative: list[dict]) -> list[dict]:
+    """Build internal voc_summary rows directly from internal voc_negative records."""
+    agg: dict[tuple[str, str], dict] = {}
+    for r in voc_negative:
+        country = r.get("country", "")
+        product_line = r.get("product_line", "")
+        key = (country, product_line)
+        if key not in agg:
+            agg[key] = {
+                "country": country,
+                "country_code": r.get("country_code"),
+                "cluster": r.get("cluster", ""),
+                "product_line": product_line,
+                "total_comments": 0,
+                "row_count": 0,
+                "pain_counter": Counter(),
+                "high_intensity_count": 0,
+                "persona_coverage": set(),
+                "platform_coverage": set(),
+                "theme_counter": Counter(),
+                "brand_counter": Counter(),
+                "summary_date": "",
+            }
+        item = agg[key]
+        weight = r.get("frequency", 0) or 1
+        item["total_comments"] += weight
+        item["row_count"] += 1
+        pain = r.get("pain_category", "") or "其他"
+        item["pain_counter"][pain] += weight
+        if r.get("intensity") == "高":
+            item["high_intensity_count"] += weight
+        if r.get("segment_code"):
+            item["persona_coverage"].add(r["segment_code"])
+        if r.get("platform"):
+            item["platform_coverage"].add(r["platform"])
+        if r.get("negative_theme"):
+            item["theme_counter"][r["negative_theme"]] += weight
+        if r.get("competitor_brand"):
+            item["brand_counter"][r["competitor_brand"]] += weight
+        collect_date = r.get("collect_date", "") or ""
+        if collect_date and collect_date > item["summary_date"]:
+            item["summary_date"] = collect_date
+
+    def pct(counter: Counter, key: str, total: int) -> float:
+        if total <= 0:
+            return 0.0
+        return round(counter.get(key, 0) / total * 100, 1)
+
+    result = []
+    for item in agg.values():
+        total = item["total_comments"]
+        result.append({
+            "country": item["country"],
+            "country_code": item["country_code"],
+            "cluster": item["cluster"],
+            "product_line": item["product_line"],
+            "total_comments": total,
+            "top5_negative_themes": ";".join(
+                name for name, _ in item["theme_counter"].most_common(5)
+            ),
+            "pain_function_pct": pct(item["pain_counter"], "功能", total),
+            "pain_price_pct": pct(item["pain_counter"], "价格", total),
+            "pain_experience_pct": pct(item["pain_counter"], "体验", total),
+            "pain_service_pct": pct(item["pain_counter"], "服务", total),
+            "pain_safety_pct": pct(item["pain_counter"], "安全", total),
+            "high_intensity_pct": round(item["high_intensity_count"] / total * 100, 1) if total > 0 else 0,
+            "persona_coverage_cnt": len(item["persona_coverage"]),
+            "platform_coverage_cnt": len(item["platform_coverage"]),
+            "top_competitor_brands": ";".join(
+                name for name, _ in item["brand_counter"].most_common(3)
+            ),
+            "summary_date": item["summary_date"],
+        })
+    return sorted(result, key=lambda x: (x["country"], x["product_line"]))
+
+
+def build_internal_voc_persona_summary(voc_negative: list[dict]) -> list[dict]:
+    """Build internal voc_persona_summary rows directly from internal voc_negative records."""
+    agg: dict[tuple[str, str, str, str], dict] = {}
+    for r in voc_negative:
+        country = r.get("country", "")
+        product_line = r.get("product_line", "")
+        platform = r.get("platform", "")
+        segment_code = r.get("segment_code", "")
+        key = (country, product_line, platform, segment_code)
+        if key not in agg:
+            agg[key] = {
+                "country": country,
+                "country_code": r.get("country_code"),
+                "cluster": r.get("cluster", ""),
+                "product_line": product_line,
+                "platform_type": r.get("platform_type", "other"),
+                "platform": platform,
+                "segment_code": segment_code,
+                "segment_name": r.get("segment_name", ""),
+                "lifecycle": r.get("lifecycle", ""),
+                "content_cnt": 0,
+                "total_comments": 0,
+                "theme_counter": Counter(),
+                "brand_counter": Counter(),
+                "collect_start": "",
+                "collect_end": "",
+                "batch_codes": set(),
+            }
+        item = agg[key]
+        weight = r.get("frequency", 0) or 1
+        item["content_cnt"] += 1
+        item["total_comments"] += weight
+        if r.get("negative_theme"):
+            item["theme_counter"][r["negative_theme"]] += weight
+        if r.get("competitor_brand"):
+            item["brand_counter"][r["competitor_brand"]] += weight
+        collect_date = r.get("collect_date", "") or ""
+        if collect_date and (not item["collect_start"] or collect_date < item["collect_start"]):
+            item["collect_start"] = collect_date
+        if collect_date and collect_date > item["collect_end"]:
+            item["collect_end"] = collect_date
+        if r.get("batch_code"):
+            item["batch_codes"].add(r["batch_code"])
+
+    result = []
+    for item in agg.values():
+        total = item["total_comments"]
+        result.append({
+            "country": item["country"],
+            "country_code": item["country_code"],
+            "cluster": item["cluster"],
+            "product_line": item["product_line"],
+            "platform_type": item["platform_type"],
+            "platform": item["platform"],
+            "segment_code": item["segment_code"],
+            "segment_name": item["segment_name"],
+            "lifecycle": item["lifecycle"],
+            "content_cnt": item["content_cnt"],
+            "valid_comment_cnt": total,
+            "total_comments": total,
+            "positive_cnt": 0,
+            "negative_cnt": total,
+            "neutral_cnt": 0,
+            "negative_rate": 100 if total > 0 else 0,
+            "top3_negative": ";".join(
+                name for name, _ in item["theme_counter"].most_common(3)
+            ),
+            "top3_positive": "",
+            "top3_competitors": ";".join(
+                name for name, _ in item["brand_counter"].most_common(3)
+            ),
+            "collect_start": item["collect_start"],
+            "collect_end": item["collect_end"],
+            "batch_code": ";".join(sorted(item["batch_codes"])),
+            "data_quality": "B",
+        })
+    return sorted(
+        result,
+        key=lambda x: (x["country"], x["product_line"], x["platform"], x["segment_code"]),
+    )
+
+
 def main():
     print("Building sections from CSV files...")
 
@@ -215,6 +374,10 @@ def main():
         "brand_distribution": dict(sorted(internal_brand_dist.items(), key=lambda x: -x[1])),
         "batches": sorted(set((r.get("batch_code") or "") for r in internal_voc_negative if r.get("batch_code"))),
     }
+    internal_voc_summary = build_internal_voc_summary(internal_voc_negative)
+    print(f"  voc_summary_internal: {len(internal_voc_summary)} rows")
+    internal_voc_persona_summary = build_internal_voc_persona_summary(internal_voc_negative)
+    print(f"  voc_persona_summary_internal: {len(internal_voc_persona_summary)} rows")
 
     now = datetime.now(timezone.utc).isoformat()
     base_meta = {
@@ -254,8 +417,8 @@ def main():
         "meta": {**base_meta, "dashboard": "opportunity_internal"},
         "platforms": platforms,
         "trust_sources": trust_sources,
-        "voc_summary": voc_summary,
-        "voc_persona_summary": voc_persona_summary,
+        "voc_summary": internal_voc_summary,
+        "voc_persona_summary": internal_voc_persona_summary,
         "voc_negative": internal_voc_negative,
         "p1_search": p1_search,
         "voc_timeline": voc_timeline_internal,
