@@ -6,6 +6,7 @@ import FilterBar from "./FilterBar";
 import { HeatmapMatrix, WeightedWordCloud, InsightCallout } from "../insights";
 import type { WeightedWord } from "../insights";
 import { CHART_COLORS_RAW } from "./constants";
+import { extractSegmentCode, getSegmentDisplayName } from "../../lib/segmentLabel";
 
 type R = Record<string, unknown>;
 interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; }
@@ -36,10 +37,55 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
     return [{ label: "全部平台", value: "all" }, ...Array.from(set).map((v) => ({ label: v, value: v }))];
   }, [voc]);
 
+  const segmentNameByCode = useMemo(() => {
+    const counterByCode: Record<string, Record<string, number>> = {};
+    vocPersona.forEach((r) => {
+      const code = s(r.segment_code).trim();
+      if (!code) return;
+      const name = s(r.segment_name).trim();
+      if (!counterByCode[code]) counterByCode[code] = {};
+      if (name) counterByCode[code][name] = (counterByCode[code][name] || 0) + 1;
+    });
+    const bestNameByCode: Record<string, string> = {};
+    Object.entries(counterByCode).forEach(([code, nameCount]) => {
+      const best = Object.entries(nameCount).sort((a, b) => b[1] - a[1])[0];
+      if (best?.[0]) bestNameByCode[code] = best[0];
+    });
+    return bestNameByCode;
+  }, [vocPersona]);
+
+  const segmentDisplayByCode = useMemo(() => {
+    const rawCodes = Array.from(new Set(vocPersona.map((r) => s(r.segment_code)).filter(Boolean)));
+    const displayMap: Record<string, string> = {};
+    const displayCount: Record<string, number> = {};
+
+    rawCodes.forEach((code) => {
+      const display = getSegmentDisplayName(code, segmentNameByCode[code]);
+      displayMap[code] = display;
+      displayCount[display] = (displayCount[display] || 0) + 1;
+    });
+
+    rawCodes.forEach((code) => {
+      const display = displayMap[code];
+      if ((displayCount[display] || 0) > 1) {
+        const segCode = extractSegmentCode(code) || code;
+        displayMap[code] = `${display}（${segCode}）`;
+      }
+    });
+
+    return displayMap;
+  }, [vocPersona, segmentNameByCode]);
+
   const segmentOptions = useMemo(() => {
     const set = new Set(vocPersona.map((r) => s(r.segment_code)).filter(Boolean));
-    return [{ label: "全部画像", value: "all" }, ...Array.from(set).map((v) => ({ label: v, value: v }))];
-  }, [vocPersona]);
+    return [
+      { label: "全部画像", value: "all" },
+      ...Array.from(set).map((code) => ({
+        label: segmentDisplayByCode[code] || code,
+        value: code,
+      })),
+    ];
+  }, [vocPersona, segmentDisplayByCode]);
 
   const filtered = useMemo(() => {
     let result = voc;
@@ -111,18 +157,22 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
 
   const segPlatforms = Array.from(new Set(filteredPersona.map((r) => s(r.platform)).filter(Boolean)));
   const segCodes = Array.from(new Set(filteredPersona.map((r) => s(r.segment_code)).filter(Boolean)));
+  const segColumns = segCodes.map((code) => segmentDisplayByCode[code] || code);
   const segPlatformCells = segPlatforms.flatMap((pl) =>
     segCodes.map((seg) => {
       const matches = filteredPersona.filter((r) => s(r.platform) === pl && s(r.segment_code) === seg);
       const total = matches.reduce((sum, r) => sum + n(r.total_comments), 0);
-      return { row: pl, column: seg, value: total };
+      return { row: pl, column: segmentDisplayByCode[seg] || seg, value: total };
     })
   );
 
   // Segment negative count bar
   const segNegData = segCodes.map((seg) => {
     const matches = filteredPersona.filter((r) => s(r.segment_code) === seg);
-    return { name: seg, negative: matches.reduce((sum, r) => sum + n(r.total_comments), 0) };
+    return {
+      name: segmentDisplayByCode[seg] || seg,
+      negative: matches.reduce((sum, r) => sum + n(r.total_comments), 0),
+    };
   }).sort((a, b) => b.negative - a.negative);
 
   // Split word clouds: themes and competitor brands.
@@ -241,7 +291,7 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
             title="平台 × 画像 分布矩阵"
             description="数值 = 有效评论数，展示不同平台聚集了哪类画像用户"
             rows={segPlatforms}
-            columns={segCodes}
+            columns={segColumns}
             cells={segPlatformCells}
           />
           {segNegData.length > 0 && (
