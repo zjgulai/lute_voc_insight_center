@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { api } from "../../../lib/api";
 
 interface CountryDetail {
@@ -34,7 +35,7 @@ export default function CountryDetailPage() {
     <>
       <div className="page-header">
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-md)" }}>
-          <a href="/countries" style={{ fontSize: 13 }}>← 返回国家列表</a>
+          <Link href="/countries" style={{ fontSize: 13 }}>← 返回国家列表</Link>
         </div>
         <h1 className="page-title" style={{ marginTop: "var(--space-sm)" }}>
           {country.code} — {country.name_cn}

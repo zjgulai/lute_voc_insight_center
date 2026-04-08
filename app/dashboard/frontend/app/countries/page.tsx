@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { api, type Country } from "../../lib/api";
+import Link from "next/link";
 
 type Filter = "all" | "top20" | "top10";
 
@@ -64,7 +65,7 @@ export default function CountriesPage() {
         }}
       >
         {filtered.map((c) => (
-          <a
+          <Link
             key={c.code}
             href={`/countries/${c.code}`}
             className="cap-card"
@@ -85,7 +86,7 @@ export default function CountriesPage() {
                 销售额: {c.sales_amount.toLocaleString()}
               </div>
             )}
-          </a>
+          </Link>
         ))}
       </div>
 

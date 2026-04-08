@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { api, API_BASE, type VizDataset, type TableInfo } from "../lib/api";
+import Link from "next/link";
 
 const TABLE_DESCRIPTIONS: Record<string, string> = {
   "dim_project_meta.csv": "项目元数据，关键指标与覆盖范围",
@@ -128,7 +129,7 @@ export default function OverviewPage() {
       </div>
 
       <div className="cap-grid">
-        <a href="/countries" className="cap-card">
+        <Link href="/countries" className="cap-card">
           <div className="cap-card-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
@@ -136,8 +137,8 @@ export default function OverviewPage() {
           <div className="cap-card-desc">
             按国家浏览完整研究数据，含画像、购买力、信息源、平台入口
           </div>
-        </a>
-        <a href="/viz" className="cap-card">
+        </Link>
+        <Link href="/viz" className="cap-card">
           <div className="cap-card-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
           </div>
@@ -145,8 +146,8 @@ export default function OverviewPage() {
           <div className="cap-card-desc">
             国家维度交互式看板，总览项目、国家、画像、购买力等多维度数据
           </div>
-        </a>
-        <a href="/opportunities" className="cap-card">
+        </Link>
+        <Link href="/opportunities" className="cap-card">
           <div className="cap-card-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
           </div>
@@ -154,8 +155,8 @@ export default function OverviewPage() {
           <div className="cap-card-desc">
             渠道入口、VOC 声量、痛点深挖、竞品图谱与趋势追踪
           </div>
-        </a>
-        <a href="/admin" className="cap-card">
+        </Link>
+        <Link href="/admin" className="cap-card">
           <div className="cap-card-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
           </div>
@@ -163,7 +164,7 @@ export default function OverviewPage() {
           <div className="cap-card-desc">
             数据源管理、ETL 编排、校验与预览
           </div>
-        </a>
+        </Link>
       </div>
 
       {brandsByLine.length > 0 && (
@@ -179,7 +180,7 @@ export default function OverviewPage() {
                 {brands.map(({ brand, count }) => {
                   const domain = BRAND_DOMAIN[brand];
                   return (
-                    <a
+                    <Link
                       key={brand}
                       href={`/opportunities?brand=${encodeURIComponent(brand)}&line=${encodeURIComponent(line)}`}
                       className="brand-card"
@@ -204,7 +205,7 @@ export default function OverviewPage() {
                       )}
                       <div className="brand-name">{brand}</div>
                       <div className="brand-count">{count} 条 VOC</div>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

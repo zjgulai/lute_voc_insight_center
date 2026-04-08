@@ -1,5 +1,6 @@
 import type { VizDataset } from "../../lib/api";
 import { forwardRef } from "react";
+import Link from "next/link";
 
 interface Props {
   data: VizDataset;
@@ -22,9 +23,9 @@ const Top20Section = forwardRef<HTMLElement, Props>(({ data }, ref) => (
             {data.top20.map((row, i) => (
               <tr key={i}>
                 <td>
-                  <a href={`/countries/${row.country_code}`}>
+                  <Link href={`/countries/${row.country_code}`}>
                     {row.country as string}
-                  </a>
+                  </Link>
                 </td>
                 <td className="font-mono">
                   {row.sales_amount != null

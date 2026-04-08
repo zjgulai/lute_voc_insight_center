@@ -4,6 +4,7 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const NAV_ITEMS = [
   { href: "/", label: "概览" },
@@ -30,13 +31,13 @@ function NavBar({
   return (
     <nav className="nav" role="navigation" aria-label="主导航">
       <div className="nav-inner">
-        <a href="/" className="nav-brand">
+        <Link href="/" className="nav-brand">
           <span className="nav-brand-icon">L</span>
           路特外部社媒聆听洞察中台
-        </a>
+        </Link>
         <div className="nav-links">
           {NAV_ITEMS.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="nav-link"
@@ -44,7 +45,7 @@ function NavBar({
               aria-current={isActive(item.href) ? "page" : undefined}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <button
             className="nav-theme-toggle"
