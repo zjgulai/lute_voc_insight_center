@@ -17,6 +17,7 @@ sys.path.insert(0, str(PROJ))
 from tools.cleaning._common import PAIN_SUBCATEGORY_PARENT
 
 VIZ_OPP = PROJ / "data" / "delivery" / "viz_opportunity.json"
+VIZ_OPP_INTERNAL = PROJ / "data" / "delivery" / "viz_opportunity_internal.json"
 PROCESSED_DIR = PROJ / "data" / "processed"
 REPORTS_DIR = PROJ / "reports"
 
@@ -32,6 +33,17 @@ FOUR_P_MAP = {
 
 def load_voc_negative(product_line: str | None = None, countries: list[str] | None = None) -> list[dict]:
     with open(VIZ_OPP, "r", encoding="utf-8") as f:
+        ds = json.load(f)
+    rows = ds.get("voc_negative", [])
+    if product_line:
+        rows = [r for r in rows if r.get("product_line") == product_line]
+    if countries:
+        rows = [r for r in rows if r.get("country") in countries]
+    return rows
+
+
+def load_internal_voc_negative(product_line: str | None = None, countries: list[str] | None = None) -> list[dict]:
+    with open(VIZ_OPP_INTERNAL, "r", encoding="utf-8") as f:
         ds = json.load(f)
     rows = ds.get("voc_negative", [])
     if product_line:
@@ -251,9 +263,12 @@ def generate_summary_bullets(rows: list[dict], product_line: str, four_p: dict, 
     return bullets
 
 
-def build_insight_report(product_line: str, countries: list[str] | None = None) -> dict:
+def build_insight_report(product_line: str, countries: list[str] | None = None, source: str = "public") -> dict:
     scope_countries = countries or TOP5_COUNTRIES
-    rows = load_voc_negative(product_line, scope_countries)
+    if source == "internal":
+        rows = load_internal_voc_negative(product_line, scope_countries)
+    else:
+        rows = load_voc_negative(product_line, scope_countries)
 
     four_p = compute_4p(rows)
     nps_brand = compute_nps_proxy(rows, "brand")
@@ -264,6 +279,7 @@ def build_insight_report(product_line: str, countries: list[str] | None = None) 
 
     return {
         "product_line": product_line,
+        "source": source,
         "scope": {"countries": scope_countries, "total_records": len(rows)},
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "framework_4p": four_p,
@@ -283,16 +299,19 @@ def build_insight_report(product_line: str, countries: list[str] | None = None) 
     }
 
 
-def save_report(report: dict, product_line: str) -> tuple[Path, Path]:
+def save_report(report: dict, product_line: str, source: str = "public") -> tuple[Path, Path]:
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    json_path = PROCESSED_DIR / f"insight_{product_line}.json"
+    prefix = "insight" if source == "public" else "insight_internal"
+    json_path = PROCESSED_DIR / f"{prefix}_{product_line}.json"
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
-    md_path = REPORTS_DIR / f"insight_{product_line}.md"
+    md_path = REPORTS_DIR / f"{prefix}_{product_line}.md"
+    source_label = "外部/竞品机会点" if source == "public" else "内部 Momcozy VOC"
     lines = [f"# {product_line} 深度洞察报告", ""]
+    lines.append(f"**数据源**: {source_label}")
     lines.append(f"**生成时间**: {report['generated_at']}")
     lines.append(f"**覆盖范围**: {', '.join(report['scope']['countries'])}，共 {report['scope']['total_records']} 条记录")
     lines.append("")

@@ -20,7 +20,13 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
     if (extLine && extLine !== "all") rows = rows.filter((r) => s(r.product_line) === extLine);
     return rows;
   }, [rawVoc, extCountry, extLine]);
-  const vocPersona = (data.voc_persona_summary ?? []) as R[];
+  const rawVocPersona = (data.voc_persona_summary ?? []) as R[];
+  const vocPersona = useMemo(() => {
+    let rows = rawVocPersona;
+    if (extCountry && extCountry !== "all") rows = rows.filter((r) => s(r.country) === extCountry);
+    if (extLine && extLine !== "all") rows = rows.filter((r) => s(r.product_line) === extLine);
+    return rows;
+  }, [rawVocPersona, extCountry, extLine]);
   const [search, setSearch] = useState("");
   const [filterPlatform, setFilterPlatform] = useState("all");
   const [filterSegment, setFilterSegment] = useState("all");
@@ -78,16 +84,20 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
   const heatProducts = Array.from(new Set(filtered.map((r) => s(r.product_line)).filter(Boolean)));
   const heatCells = heatCountries.flatMap((c) =>
     heatProducts.map((pl) => {
-      const match = filtered.find((r) => (s(r.country) || s(r.country_code)) === c && s(r.product_line) === pl);
-      return { row: c, column: pl, value: match ? n(match.total_comments) : 0 };
+      const matches = filtered.filter((r) => (s(r.country) || s(r.country_code)) === c && s(r.product_line) === pl);
+      const total = matches.reduce((sum, r) => sum + (n(r.total_comments) || 0), 0);
+      return { row: c, column: pl, value: total };
     })
   );
 
   // Heatmap 2: country × product_line high_intensity_pct
   const heatIntensityCells = heatCountries.flatMap((c) =>
     heatProducts.map((pl) => {
-      const match = filtered.find((r) => (s(r.country) || s(r.country_code)) === c && s(r.product_line) === pl);
-      return { row: c, column: pl, value: match ? n(match.high_intensity_pct) : 0 };
+      const matches = filtered.filter((r) => (s(r.country) || s(r.country_code)) === c && s(r.product_line) === pl);
+      if (matches.length === 0) return { row: c, column: pl, value: 0 };
+      const weightedHigh = matches.reduce((sum, r) => sum + (n(r.high_intensity_pct) * Math.max(1, n(r.total_comments))), 0);
+      const weightedBase = matches.reduce((sum, r) => sum + Math.max(1, n(r.total_comments)), 0);
+      return { row: c, column: pl, value: weightedBase > 0 ? Number((weightedHigh / weightedBase).toFixed(1)) : 0 };
     })
   );
 
@@ -115,25 +125,29 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
     return { name: seg, negative: matches.reduce((sum, r) => sum + n(r.total_comments), 0) };
   }).sort((a, b) => b.negative - a.negative);
 
-  // Word cloud from top5_negative_themes and top_competitor_brands
-  const themeMap = new Map<string, { w: number; tone: WeightedWord["tone"] }>();
+  // Split word clouds: themes and competitor brands.
+  const themeMap = new Map<string, number>();
+  const brandMap = new Map<string, number>();
   filtered.forEach((r) => {
     const pains = s(r.top5_negative_themes).split(";").map((t) => t.trim()).filter(Boolean);
     pains.forEach((t) => {
-      const e = themeMap.get(t) ?? { w: 0, tone: "strong" as const };
-      e.w += 1; themeMap.set(t, e);
+      themeMap.set(t, (themeMap.get(t) || 0) + 1);
     });
     const brands = s(r.top_competitor_brands).split(";").map((t) => t.trim()).filter(Boolean);
     brands.forEach((t) => {
-      const e = themeMap.get(t) ?? { w: 0, tone: "default" as const };
-      e.w += 1; themeMap.set(t, e);
+      brandMap.set(t, (brandMap.get(t) || 0) + 1);
     });
   });
-  const words: WeightedWord[] = Array.from(themeMap.entries())
+  const themeWords: WeightedWord[] = Array.from(themeMap.entries())
     .filter(([text]) => text && text !== "null" && text !== "None")
-    .map(([text, d]) => ({ text, weight: d.w, tone: d.tone }))
+    .map(([text, weight]) => ({ text, weight, tone: "strong" as const }))
     .sort((a, b) => b.weight - a.weight)
-    .slice(0, 30);
+    .slice(0, 24);
+  const brandWords: WeightedWord[] = Array.from(brandMap.entries())
+    .filter(([text]) => text && text !== "null" && text !== "None")
+    .map(([text, weight]) => ({ text, weight, tone: "default" as const }))
+    .sort((a, b) => b.weight - a.weight)
+    .slice(0, 24);
 
   const totalComments = filtered.reduce((sum, r) => sum + n(r.total_comments), 0);
   const uniquePlatforms = new Set(filtered.map((r) => s(r.platform)).filter(Boolean)).size;
@@ -176,7 +190,18 @@ const VOCSummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry:
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <WeightedWordCloud title="负面主题与竞品词云" description="红=痛点主题，绿=竞品品牌" words={words} />
+        <WeightedWordCloud title="负面主题词云" description="基于 TOP5 负面主题统计（证据条数）" words={themeWords} />
+      </div>
+      <div className="dual-grid">
+        <WeightedWordCloud title="竞品品牌词云" description="基于 TOP 竞品提及统计（证据条数）" words={brandWords} />
+        <div className="card" style={{ padding: "var(--space-lg)" }}>
+          <div className="card-title">词云口径说明</div>
+          <div style={{ fontSize: 13, color: "var(--color-text-secondary)", lineHeight: 1.8 }}>
+            <div>1) 主题词云与品牌词云已拆分，避免语义混用。</div>
+            <div>2) 权重按记录条目计数，主 KPI 仍是证据条数。</div>
+            <div>3) 若需工单当量视角，请在内部 VOC 看板查看辅助指标。</div>
+          </div>
+        </div>
       </div>
 
       {heatCountries.length > 0 && heatProducts.length > 1 && (

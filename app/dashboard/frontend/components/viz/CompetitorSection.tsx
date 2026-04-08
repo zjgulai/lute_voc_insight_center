@@ -37,7 +37,7 @@ const CompetitorSection = forwardRef<HTMLElement, Props>(({ data, filterCountry,
       for (const cat of PAIN_CATEGORIES) {
         entry[cat] = vocNeg
           .filter((r) => s(r.competitor_brand) === brand && s(r.pain_category) === cat)
-          .reduce((sum, r) => sum + (n(r.frequency) || 1), 0);
+          .length;
       }
       return entry;
     }).sort((a, b) => {
@@ -62,7 +62,7 @@ const CompetitorSection = forwardRef<HTMLElement, Props>(({ data, filterCountry,
       const sc = s(r.pain_subcategory);
       if (!brand || !sc || sc === "其他" || !top5Brands.includes(brand)) return;
       if (!subcatMap[brand]) subcatMap[brand] = {};
-      subcatMap[brand][sc] = (subcatMap[brand][sc] || 0) + (n(r.frequency) || 1);
+      subcatMap[brand][sc] = (subcatMap[brand][sc] || 0) + 1;
     });
     return top5Brands.map((brand) => {
       const subs = subcatMap[brand] || {};
@@ -118,7 +118,7 @@ const CompetitorSection = forwardRef<HTMLElement, Props>(({ data, filterCountry,
         </div>
         <div className="stat-card">
           <div className="stat-value">{topBrandTotal}</div>
-          <div className="stat-label">TOP 竞品频次</div>
+          <div className="stat-label">TOP 竞品证据条数</div>
         </div>
       </div>
 
@@ -192,9 +192,9 @@ const CompetitorSection = forwardRef<HTMLElement, Props>(({ data, filterCountry,
 
       <InsightCallout
         title="竞品图谱洞察"
-        summary={`共识别 ${brands.length} 个被提及的竞品品牌。${topBrand ? `${topBrand.brand} 负面反馈最集中（频次 ${topBrandTotal}）。` : ""}`}
+        summary={`共识别 ${brands.length} 个被提及的竞品品牌。${topBrand ? `${topBrand.brand} 负面反馈最集中（证据 ${topBrandTotal} 条）。` : ""}`}
         bullets={[
-          "频次高的品牌代表市场讨论热度大，可作为差异化突破口",
+          "证据条数高的品牌代表市场讨论热度大，可作为差异化突破口",
           "多国都被提及的痛点是行业共性问题，优先解决可形成竞争优势",
         ]}
         badge="竞品洞察"

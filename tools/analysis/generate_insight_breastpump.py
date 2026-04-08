@@ -7,7 +7,7 @@ from pathlib import Path
 PROJ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJ))
 
-from tools.analysis._insight_common import build_insight_report, save_report, load_voc_negative, TOP5_COUNTRIES
+from tools.analysis._insight_common import build_insight_report, save_report, load_voc_negative, load_internal_voc_negative, TOP5_COUNTRIES
 from collections import Counter
 
 WEARABLE_BRANDS = {"Elvie", "Willow", "Momcozy", "Baby Buddha", "BellaBaby"}
@@ -15,7 +15,8 @@ PLUG_IN_BRANDS = {"Medela", "Spectra", "Lansinoh", "Ameda", "Motif Medical", "Ev
 
 
 def add_breastpump_specific(report: dict) -> dict:
-    rows = load_voc_negative("吸奶器", TOP5_COUNTRIES)
+    loader = load_internal_voc_negative if report.get("source") == "internal" else load_voc_negative
+    rows = loader("吸奶器", TOP5_COUNTRIES)
 
     wearable = [r for r in rows if r.get("competitor_brand") in WEARABLE_BRANDS]
     plugin = [r for r in rows if r.get("competitor_brand") in PLUG_IN_BRANDS]
@@ -85,15 +86,16 @@ def add_breastpump_specific(report: dict) -> dict:
 
 def main():
     print("Generating breast pump insight report...")
-    report = build_insight_report("吸奶器")
-    report = add_breastpump_specific(report)
-    json_path, md_path = save_report(report, "breastpump")
-    print(f"JSON: {json_path}")
-    print(f"Markdown: {md_path}")
-    print(f"Records: {report['scope']['total_records']}")
-    print(f"Summary bullets: {len(report['summary_bullets'])}")
-    for b in report["summary_bullets"]:
-        print(f"  - {b}")
+    for source in ("public", "internal"):
+        report = build_insight_report("吸奶器", source=source)
+        report = add_breastpump_specific(report)
+        json_path, md_path = save_report(report, "breastpump", source=source)
+        print(f"[{source}] JSON: {json_path}")
+        print(f"[{source}] Markdown: {md_path}")
+        print(f"[{source}] Records: {report['scope']['total_records']}")
+        print(f"[{source}] Summary bullets: {len(report['summary_bullets'])}")
+        for b in report["summary_bullets"]:
+            print(f"  - {b}")
 
 
 if __name__ == "__main__":

@@ -5,8 +5,11 @@ const STATIC_FILE_MAP: Record<string, string> = {
   "/api/v1/research/viz-data": "viz_dataset.json",
   "/api/v1/analysis/data": "viz_country_insight.json",
   "/api/v1/opportunity/data": "viz_opportunity.json",
+  "/api/v1/opportunity/internal": "viz_opportunity_internal.json",
   "/api/v1/insight/breastpump": "insight_breastpump.json",
   "/api/v1/insight/feedingappliance": "insight_feedingappliance.json",
+  "/api/v1/insight/internal/breastpump": "insight_internal_breastpump.json",
+  "/api/v1/insight/internal/feedingappliance": "insight_internal_feedingappliance.json",
 };
 
 let _cachedVizData: VizDataset | null = null;
@@ -124,6 +127,7 @@ export const api = {
   vizData: () => fetchJSON<VizDataset>("/api/v1/research/viz-data"),
   countryInsightData: () => fetchJSON<VizDataset>("/api/v1/analysis/data"),
   opportunityData: () => fetchJSON<VizDataset>("/api/v1/opportunity/data"),
+  opportunityInternalData: () => fetchJSON<VizDataset>("/api/v1/opportunity/internal"),
 
   reloadDatasets: () => STATIC_MODE
     ? Promise.resolve({ status: "static mode - no reload" })
@@ -165,6 +169,10 @@ export const api = {
     ? Promise.resolve({ tables: [] as TableInfo[], json_outputs: [] as JsonInfo[] })
     : fetchJSON<{ tables: TableInfo[]; json_outputs: JsonInfo[] }>("/api/v1/admin/status"),
 
-  insightData: (productLine: string) =>
-    fetchJSON<Record<string, unknown>>(`/api/v1/insight/${productLine}`),
+  insightData: (productLine: string, options?: { internal?: boolean }) =>
+    fetchJSON<Record<string, unknown>>(
+      options?.internal
+        ? `/api/v1/insight/internal/${productLine}`
+        : `/api/v1/insight/${productLine}`
+    ),
 };

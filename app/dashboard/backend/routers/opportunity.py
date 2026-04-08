@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from services.dataset_service import get_opportunity
+from services.dataset_service import get_opportunity, get_opportunity_internal
 
 router = APIRouter()
 
@@ -15,3 +15,9 @@ router = APIRouter()
 def opportunity_data() -> dict:
     """返回机会点挖掘看板完整数据集。"""
     return get_opportunity()
+
+
+@router.get("/internal")
+def opportunity_internal_data() -> dict:
+    """返回内部 Momcozy VOC 看板数据集。"""
+    return get_opportunity_internal()

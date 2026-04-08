@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { href: "/countries", label: "国家画像" },
   { href: "/viz", label: "国家洞察" },
   { href: "/opportunities", label: "机会点识别" },
+  { href: "/internal-voc", label: "内部VOC看板" },
   { href: "/admin", label: "运营后台" },
 ];
 

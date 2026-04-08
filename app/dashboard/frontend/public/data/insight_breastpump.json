@@ -1,5 +1,6 @@
 {
   "product_line": "吸奶器",
+  "source": "public",
   "scope": {
     "countries": [
       "美国",
@@ -10,7 +11,7 @@
     ],
     "total_records": 540
   },
-  "generated_at": "2026-04-08T00:53:05.825065+00:00",
+  "generated_at": "2026-04-08T07:22:48.446558+00:00",
   "framework_4p": {
     "Product": {
       "total_records": 252,
@@ -672,10 +673,10 @@
           "退款/售后困难": 12
         },
         "brands": [
+          "Baby Buddha",
           "Willow",
           "Elvie",
-          "Momcozy",
-          "Baby Buddha"
+          "Momcozy"
         ]
       },
       "plugin": {
@@ -692,8 +693,8 @@
           "续航/电量问题": 8
         },
         "brands": [
-          "Medela",
           "Lansinoh",
+          "Medela",
           "Spectra"
         ]
       },

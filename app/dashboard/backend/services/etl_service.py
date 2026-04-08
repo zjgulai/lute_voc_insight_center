@@ -76,6 +76,7 @@ def get_json_status() -> list[dict[str, Any]]:
     json_files = [
         "viz_country_insight.json",
         "viz_opportunity.json",
+        "viz_opportunity_internal.json",
         "viz_dataset.json",
     ]
     result = []

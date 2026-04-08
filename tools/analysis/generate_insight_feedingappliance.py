@@ -9,7 +9,7 @@ from collections import Counter
 PROJ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJ))
 
-from tools.analysis._insight_common import build_insight_report, save_report, load_voc_negative, TOP5_COUNTRIES
+from tools.analysis._insight_common import build_insight_report, save_report, load_voc_negative, load_internal_voc_negative, TOP5_COUNTRIES
 
 SUB_PRODUCT_KEYWORDS = {
     "暖奶器": ["bottle warmer", "warmer", "chauffe-biberon", "Flaschenwärmer", "calienta biberones", "暖奶", "温奶"],
@@ -29,7 +29,8 @@ def infer_sub_product(text: str) -> str:
 
 
 def add_feeding_specific(report: dict) -> dict:
-    rows = load_voc_negative("喂养电器", TOP5_COUNTRIES)
+    loader = load_internal_voc_negative if report.get("source") == "internal" else load_voc_negative
+    rows = loader("喂养电器", TOP5_COUNTRIES)
 
     sub_product_map: dict[str, list[dict]] = {}
     for r in rows:
@@ -103,15 +104,16 @@ def add_feeding_specific(report: dict) -> dict:
 
 def main():
     print("Generating feeding appliance insight report...")
-    report = build_insight_report("喂养电器")
-    report = add_feeding_specific(report)
-    json_path, md_path = save_report(report, "feedingappliance")
-    print(f"JSON: {json_path}")
-    print(f"Markdown: {md_path}")
-    print(f"Records: {report['scope']['total_records']}")
-    print(f"Summary bullets: {len(report['summary_bullets'])}")
-    for b in report["summary_bullets"]:
-        print(f"  - {b}")
+    for source in ("public", "internal"):
+        report = build_insight_report("喂养电器", source=source)
+        report = add_feeding_specific(report)
+        json_path, md_path = save_report(report, "feedingappliance", source=source)
+        print(f"[{source}] JSON: {json_path}")
+        print(f"[{source}] Markdown: {md_path}")
+        print(f"[{source}] Records: {report['scope']['total_records']}")
+        print(f"[{source}] Summary bullets: {len(report['summary_bullets'])}")
+        for b in report["summary_bullets"]:
+            print(f"  - {b}")
 
 
 if __name__ == "__main__":

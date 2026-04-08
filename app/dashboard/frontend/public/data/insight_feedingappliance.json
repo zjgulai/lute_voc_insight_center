@@ -1,5 +1,6 @@
 {
   "product_line": "喂养电器",
+  "source": "public",
   "scope": {
     "countries": [
       "美国",
@@ -10,7 +11,7 @@
     ],
     "total_records": 125
   },
-  "generated_at": "2026-04-08T00:53:11.274757+00:00",
+  "generated_at": "2026-04-08T07:22:49.002961+00:00",
   "framework_4p": {
     "Product": {
       "total_records": 44,

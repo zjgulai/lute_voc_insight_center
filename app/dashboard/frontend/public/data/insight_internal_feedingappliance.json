@@ -1,0 +1,448 @@
+{
+  "product_line": "喂养电器",
+  "source": "internal",
+  "scope": {
+    "countries": [
+      "美国",
+      "加拿大",
+      "英国",
+      "德国",
+      "法国"
+    ],
+    "total_records": 1210
+  },
+  "generated_at": "2026-04-08T07:22:49.166592+00:00",
+  "framework_4p": {
+    "Product": {
+      "total_records": 457,
+      "frequency_sum": 7127,
+      "high_intensity_count": 125,
+      "high_intensity_ratio": 27.4,
+      "top_subcategories": [
+        {
+          "name": "产品损坏/停止运转",
+          "count": 153
+        },
+        {
+          "name": "过热/安全隐患",
+          "count": 84
+        },
+        {
+          "name": "加热功能失效",
+          "count": 69
+        },
+        {
+          "name": "锈蚀/涂层脱落",
+          "count": 20
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Momcozy",
+          "count": 457
+        }
+      ],
+      "brand_quality_score": {
+        "Momcozy": 72.6
+      },
+      "insight": "TOP 子分类：产品损坏/停止运转（153条） | 最多被提及品牌：Momcozy（457条） | 高强度占比 27.4%",
+      "recommendation": "优先解决 产品损坏/停止运转，降低高强度比（当前 27.4%）"
+    },
+    "Price": {
+      "total_records": 96,
+      "frequency_sum": 815,
+      "high_intensity_count": 17,
+      "high_intensity_ratio": 17.7,
+      "top_subcategories": [
+        {
+          "name": "整体性价比低",
+          "count": 61
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Momcozy",
+          "count": 96
+        }
+      ],
+      "brand_quality_score": {
+        "Momcozy": 82.3
+      },
+      "insight": "TOP 子分类：整体性价比低（61条） | 最多被提及品牌：Momcozy（96条） | 高强度占比 17.7%",
+      "recommendation": "价格敏感主要来自 Momcozy 用户群，建议差异化定价"
+    },
+    "Place": {
+      "total_records": 289,
+      "frequency_sum": 5898,
+      "high_intensity_count": 82,
+      "high_intensity_ratio": 28.4,
+      "top_subcategories": [
+        {
+          "name": "售后/退款困难",
+          "count": 136
+        },
+        {
+          "name": "发货延迟",
+          "count": 56
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Momcozy",
+          "count": 289
+        }
+      ],
+      "brand_quality_score": {
+        "Momcozy": 71.6
+      },
+      "insight": "TOP 子分类：售后/退款困难（136条） | 最多被提及品牌：Momcozy（289条） | 高强度占比 28.4%",
+      "recommendation": "渠道服务痛点集中于 售后/退款困难，建议加强本地化售后"
+    },
+    "Promotion": {
+      "total_records": 368,
+      "frequency_sum": 2833,
+      "high_intensity_count": 46,
+      "high_intensity_ratio": 12.5,
+      "top_subcategories": [
+        {
+          "name": "清洗困难/卫生问题",
+          "count": 72
+        },
+        {
+          "name": "漏水/密封问题",
+          "count": 59
+        },
+        {
+          "name": "噪音/震动问题",
+          "count": 29
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Momcozy",
+          "count": 368
+        }
+      ],
+      "brand_quality_score": {
+        "Momcozy": 87.5
+      },
+      "insight": "TOP 子分类：清洗困难/卫生问题（72条） | 最多被提及品牌：Momcozy（368条） | 高强度占比 12.5%",
+      "recommendation": "体验类投诉高强度比 12.5%，宣传时避免过度承诺使用便利性"
+    }
+  },
+  "nps_proxy": {
+    "by_brand": {
+      "Momcozy": 81.7
+    },
+    "by_country": {
+      "加拿大": 86.1,
+      "德国": 87.2,
+      "法国": 89.6,
+      "美国": 73.1,
+      "英国": 84.3
+    },
+    "brand_detail": {
+      "Momcozy": {
+        "composite": 81.7,
+        "functional": 77.2,
+        "experience": 87.5,
+        "price_perception": 92.1,
+        "service": 71.6,
+        "record_count": 1210
+      }
+    },
+    "country_detail": {
+      "加拿大": {
+        "composite": 86.1,
+        "functional": 86.0,
+        "experience": 89.4,
+        "price_perception": 94.3,
+        "service": 71.4,
+        "record_count": 211
+      },
+      "德国": {
+        "composite": 87.2,
+        "functional": 81.9,
+        "experience": 94.1,
+        "price_perception": 85.0,
+        "service": 90.0,
+        "record_count": 220
+      },
+      "法国": {
+        "composite": 89.6,
+        "functional": 80.0,
+        "experience": 100.0,
+        "price_perception": 87.5,
+        "service": 96.7,
+        "record_count": 152
+      },
+      "美国": {
+        "composite": 73.1,
+        "functional": 65.0,
+        "experience": 80.1,
+        "price_perception": 94.6,
+        "service": 59.3,
+        "record_count": 448
+      },
+      "英国": {
+        "composite": 84.3,
+        "functional": 83.3,
+        "experience": 86.5,
+        "price_perception": 95.5,
+        "service": 71.1,
+        "record_count": 179
+      }
+    },
+    "detractors_drivers": [
+      "售后/退款困难（56条高强度）",
+      "过热/安全隐患（45条高强度）",
+      "产品损坏/停止运转（32条高强度）",
+      "清洗困难/卫生问题（18条高强度）"
+    ],
+    "passives_drivers": [
+      "产品损坏/停止运转（31条中等）",
+      "售后/退款困难（20条中等）",
+      "清洗困难/卫生问题（18条中等）",
+      "加热功能失效（17条中等）"
+    ],
+    "insight": "NPS 代理得分范围 81.7 ~ 81.7。 Momcozy 综合分最低（81.7），主要拖累维度为功能（77.2）。",
+    "recommendation": "优先改善 售后/退款困难（56条高强度），可挽回 229 条中等不满用户"
+  },
+  "country_comparison": {
+    "pain_heatmap": [
+      {
+        "country": "加拿大",
+        "pain_category": "体验",
+        "frequency": 243
+      },
+      {
+        "country": "加拿大",
+        "pain_category": "功能",
+        "frequency": 386
+      },
+      {
+        "country": "加拿大",
+        "pain_category": "价格",
+        "frequency": 89
+      },
+      {
+        "country": "加拿大",
+        "pain_category": "服务",
+        "frequency": 510
+      },
+      {
+        "country": "加拿大",
+        "pain_category": "安全",
+        "frequency": 72
+      },
+      {
+        "country": "德国",
+        "pain_category": "体验",
+        "frequency": 273
+      },
+      {
+        "country": "德国",
+        "pain_category": "功能",
+        "frequency": 714
+      },
+      {
+        "country": "德国",
+        "pain_category": "服务",
+        "frequency": 437
+      },
+      {
+        "country": "德国",
+        "pain_category": "价格",
+        "frequency": 107
+      },
+      {
+        "country": "德国",
+        "pain_category": "安全",
+        "frequency": 141
+      },
+      {
+        "country": "法国",
+        "pain_category": "服务",
+        "frequency": 104
+      },
+      {
+        "country": "法国",
+        "pain_category": "功能",
+        "frequency": 225
+      },
+      {
+        "country": "法国",
+        "pain_category": "体验",
+        "frequency": 110
+      },
+      {
+        "country": "法国",
+        "pain_category": "价格",
+        "frequency": 144
+      },
+      {
+        "country": "法国",
+        "pain_category": "安全",
+        "frequency": 68
+      },
+      {
+        "country": "美国",
+        "pain_category": "功能",
+        "frequency": 4600
+      },
+      {
+        "country": "美国",
+        "pain_category": "价格",
+        "frequency": 456
+      },
+      {
+        "country": "美国",
+        "pain_category": "服务",
+        "frequency": 4658
+      },
+      {
+        "country": "美国",
+        "pain_category": "体验",
+        "frequency": 2003
+      },
+      {
+        "country": "美国",
+        "pain_category": "安全",
+        "frequency": 623
+      },
+      {
+        "country": "英国",
+        "pain_category": "体验",
+        "frequency": 204
+      },
+      {
+        "country": "英国",
+        "pain_category": "功能",
+        "frequency": 256
+      },
+      {
+        "country": "英国",
+        "pain_category": "安全",
+        "frequency": 42
+      },
+      {
+        "country": "英国",
+        "pain_category": "服务",
+        "frequency": 189
+      },
+      {
+        "country": "英国",
+        "pain_category": "价格",
+        "frequency": 19
+      }
+    ],
+    "brand_dominance_by_country": {
+      "加拿大": {
+        "Momcozy": 211
+      },
+      "德国": {
+        "Momcozy": 220
+      },
+      "法国": {
+        "Momcozy": 152
+      },
+      "美国": {
+        "Momcozy": 448
+      },
+      "英国": {
+        "Momcozy": 179
+      }
+    },
+    "insight": "覆盖 5 个国家，各国痛点分布存在差异"
+  },
+  "competitive_intelligence": {
+    "brand_vulnerability_matrix": {
+      "Momcozy": {
+        "total": 1210,
+        "high_ratio": 22.3,
+        "功能": "高",
+        "体验": "极高",
+        "价格": "中",
+        "服务": "高",
+        "安全": "中"
+      }
+    },
+    "whitespace_opportunities": [
+      "Momcozy 高强度比最高（22.3%），可作为差异化突破口"
+    ],
+    "insight": "共识别 1 个竞品品牌的脆弱性分布"
+  },
+  "summary_bullets": [
+    "本次分析覆盖 5 个国家、1 个竞品品牌、1210 条负面记录，高强度占比 22%",
+    "Product 维度：产品损坏/停止运转 是最突出的产品缺陷（153条），高强度比 27.4%",
+    "NPS 代理：Momcozy 综合分最低（81.7分），是主要竞品薄弱品牌",
+    "强烈不满用户（Detractors）核心驱动因素：售后/退款困难（56条高强度）",
+    "喂养电器安全警报：安全类投诉占比 12%，过热/着火/塑料气味是核心风险，涉及 1 个品牌",
+    "子品类拆分：其他喂养电器 投诉最集中（725条），安全占比 9.7%"
+  ],
+  "feeding_specific": {
+    "sub_product_breakdown": {
+      "其他喂养电器": {
+        "count": 725,
+        "high_ratio": 22.2,
+        "safety_count": 70,
+        "safety_ratio": 9.7,
+        "top_brands": {
+          "Momcozy": 725
+        }
+      },
+      "暖奶器": {
+        "count": 363,
+        "high_ratio": 24.0,
+        "safety_count": 62,
+        "safety_ratio": 17.1,
+        "top_brands": {
+          "Momcozy": 363
+        }
+      },
+      "消毒锅": {
+        "count": 117,
+        "high_ratio": 17.1,
+        "safety_count": 9,
+        "safety_ratio": 7.7,
+        "top_brands": {
+          "Momcozy": 117
+        }
+      },
+      "辅食机": {
+        "count": 5,
+        "high_ratio": 40.0,
+        "safety_count": 0,
+        "safety_ratio": 0.0,
+        "top_brands": {
+          "Momcozy": 5
+        }
+      }
+    },
+    "safety_focus": {
+      "total_safety_records": 141,
+      "safety_ratio_overall": 11.7,
+      "top_safety_subcategories": {
+        "过热/安全隐患": 84,
+        "其他": 31,
+        "锈蚀/涂层脱落": 20,
+        "材质/气味问题": 6
+      },
+      "top_safety_brands": {
+        "Momcozy": 141
+      },
+      "safety_by_country": {
+        "加拿大": 20,
+        "德国": 24,
+        "法国": 20,
+        "美国": 57,
+        "英国": 20
+      },
+      "insight": "安全类投诉占全部喂养电器投诉的 12%。 Momcozy 是安全投诉最多的品牌（141条）。 过热/安全隐患和材质/气味是最主要的安全子类。",
+      "recommendation": "安全认证（CE/FDA/BPA-free）应作为产品宣传的第一优先级。安全类投诉需要紧急响应机制。"
+    },
+    "market_maturity": {
+      "insight": "喂养电器总投诉量 1210 条，远低于吸奶器。 投诉更集中于安全（过热、材质）而非功能细节，表明市场尚在基本品质信任建立阶段。 率先解决安全问题的品牌将获得先发信任优势。"
+    }
+  }
+}

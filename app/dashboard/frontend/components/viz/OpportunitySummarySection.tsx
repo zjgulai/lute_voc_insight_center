@@ -48,7 +48,7 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
       const sc = s(r.pain_subcategory);
       const brand = s(r.competitor_brand);
       const plat = s(r.platform);
-      const freq = n(r.frequency) || 1;
+      const freq = 1;
       if (pc) painCounts[pc] = (painCounts[pc] || 0) + freq;
       if (sc && sc !== "其他") subcatCounts[sc] = (subcatCounts[sc] || 0) + freq;
       if (brand) brandCounts[brand] = (brandCounts[brand] || 0) + freq;
@@ -70,7 +70,7 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
       result.push({
         icon: "target",
         title: "核心痛点",
-        text: `${topPain[0]}类痛点频次最高（${topPain[1]}次），其中「${topSubcat[0]}」最集中（${topSubcat[1]}次）`,
+        text: `${topPain[0]}类痛点证据最多（${topPain[1]}条），其中「${topSubcat[0]}」最集中（${topSubcat[1]}条）`,
         color: PAIN_CATEGORY_COLORS[topPain[0]] || "#6b7280",
         priority: "high" as const,
       });
@@ -80,7 +80,7 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
       result.push({
         icon: "users",
         title: "竞品弱点",
-        text: `${topBrand[0]} 负面反馈最集中（频次 ${topBrand[1]}），共 ${brandCount} 个品牌被提及`,
+        text: `${topBrand[0]} 负面反馈最集中（证据 ${topBrand[1]} 条），共 ${brandCount} 个品牌被提及`,
         color: "#8b5cf6",
         priority: "high" as const,
       });
@@ -124,7 +124,7 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
       const sc = s(r.pain_subcategory);
       if (!sc || sc === "其他") return;
       if (!subcatMap[sc]) subcatMap[sc] = { freq: 0, highCount: 0, countries: new Set(), painCat: s(r.pain_category) };
-      subcatMap[sc].freq += n(r.frequency) || 1;
+      subcatMap[sc].freq += 1;
       if (s(r.intensity) === "高") subcatMap[sc].highCount++;
       const c = s(r.country);
       if (c) subcatMap[sc].countries.add(c);
@@ -197,7 +197,7 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
         <div className="card" style={{ padding: "var(--space-lg)" }}>
           <div className="card-title">痛点子分类优先级矩阵</div>
           <p style={{ fontSize: 12, color: "var(--color-text-secondary)", marginBottom: "var(--space-md)" }}>
-            按频次排序，展示各子分类的严重程度（高强度占比）和覆盖范围（国家数）
+            按证据条数排序，展示各子分类的严重程度（高强度占比）和覆盖范围（国家数）
           </p>
           <div className="table-wrap">
             <table>
@@ -205,7 +205,7 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
                 <tr>
                   <th>痛点子分类</th>
                   <th>所属大类</th>
-                  <th>频次</th>
+                  <th>证据条数</th>
                   <th>高强度占比</th>
                   <th>覆盖国家</th>
                   <th>优先级</th>
@@ -242,20 +242,23 @@ const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filter
           </div>
         </div>
       )}
-      <DeepInsightPanel filterProductLine={filterProductLine} />
+      <DeepInsightPanel
+        filterProductLine={filterProductLine}
+        isInternal={(data as unknown as R)?.meta != null && s(((data as unknown as R).meta as R).dashboard) === "opportunity_internal"}
+      />
     </section>
   );
 });
 
-function DeepInsightPanel({ filterProductLine }: { filterProductLine?: string }) {
+function DeepInsightPanel({ filterProductLine, isInternal = false }: { filterProductLine?: string; isInternal?: boolean }) {
   const [insight, setInsight] = useState<R | null>(null);
   const [expanded, setExpanded] = useState(false);
 
   const lineKey = filterProductLine === "喂养电器" ? "feedingappliance" : "breastpump";
 
   useEffect(() => {
-    api.insightData(lineKey).then((d) => setInsight(d as R)).catch(() => setInsight(null));
-  }, [lineKey]);
+    api.insightData(lineKey, { internal: isInternal }).then((d) => setInsight(d as R)).catch(() => setInsight(null));
+  }, [lineKey, isInternal]);
 
   if (!insight) return null;
 
@@ -270,7 +273,7 @@ function DeepInsightPanel({ filterProductLine }: { filterProductLine?: string })
         style={{ display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
         onClick={() => setExpanded(!expanded)}
       >
-        <div className="card-title" style={{ marginBottom: 0 }}>4P 营销框架 & NPS 深度洞察</div>
+        <div className="card-title" style={{ marginBottom: 0 }}>{isInternal ? "内部 VOC 深度洞察" : "4P 营销框架 & NPS 深度洞察"}</div>
         <button style={{ fontSize: 12, padding: "4px 12px" }}>{expanded ? "收起" : "展开详情"}</button>
       </div>
 

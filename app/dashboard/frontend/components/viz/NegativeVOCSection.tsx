@@ -84,7 +84,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
 
   const painBarData = PAIN_CATEGORIES.map((cat) => ({
     name: cat,
-    freq: filtered.filter((r) => s(r.pain_category) === cat).reduce((sum, r) => sum + (n(r.frequency) || 1), 0),
+    freq: filtered.filter((r) => s(r.pain_category) === cat).length,
   })).sort((a, b) => b.freq - a.freq);
 
   const subcatBarData = useMemo(() => {
@@ -94,7 +94,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
       if (!sc || sc === "其他") return;
       const parent = s(r.pain_category);
       if (!map[sc]) map[sc] = { name: sc, freq: 0, parent };
-      map[sc].freq += n(r.frequency) || 1;
+      map[sc].freq += 1;
     });
     return Object.values(map).sort((a, b) => b.freq - a.freq).slice(0, 15);
   }, [filtered]);
@@ -102,14 +102,14 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
   const wordMap = new Map<string, number>();
   filtered.forEach((r) => {
     const theme = s(r.negative_theme) || s(r.pain_subcategory);
-    if (theme && theme !== "其他") wordMap.set(theme, (wordMap.get(theme) || 0) + (n(r.frequency) || 1));
+    if (theme && theme !== "其他") wordMap.set(theme, (wordMap.get(theme) || 0) + 1);
   });
   const negWords: WeightedWord[] = Array.from(wordMap.entries())
     .map(([text, weight]) => ({ text, weight, tone: "strong" as const }))
     .sort((a, b) => b.weight - a.weight)
     .slice(0, 30);
 
-  const totalFreq = filtered.reduce((sum, r) => sum + (n(r.frequency) || 1), 0);
+  const totalFreq = filtered.length;
   const highIntensity = filtered.filter((r) => s(r.intensity) === "高").length;
   const topPain = painBarData[0]?.name ?? "—";
   const topSubcat = subcatBarData[0]?.name ?? "—";
@@ -119,7 +119,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
     PAIN_CATEGORIES.map((cat) => ({
       row: c,
       column: cat,
-      value: filtered.filter((r) => s(r.country) === c && s(r.pain_category) === cat).reduce((sum, r) => sum + (n(r.frequency) || 1), 0),
+      value: filtered.filter((r) => s(r.country) === c && s(r.pain_category) === cat).length,
     }))
   );
 
@@ -139,14 +139,14 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
         ]}
         stats={[
           { label: "条目", value: filtered.length },
-          { label: "频次", value: totalFreq },
+          { label: "证据", value: totalFreq },
           { label: "高强度", value: highIntensity },
         ]}
       />
 
       <div className="stat-grid">
         <div className="stat-card"><div className="stat-value">{filtered.length}</div><div className="stat-label">负面条目</div></div>
-        <div className="stat-card"><div className="stat-value">{totalFreq}</div><div className="stat-label">频次合计</div></div>
+        <div className="stat-card"><div className="stat-value">{totalFreq}</div><div className="stat-label">证据条数</div></div>
         <div className="stat-card"><div className="stat-value" style={{ color: "var(--color-error)" }}>{highIntensity}</div><div className="stat-label">高强度</div></div>
         <div className="stat-card"><div className="stat-value">{topPain}</div><div className="stat-label">TOP 痛点大类</div></div>
         <div className="stat-card"><div className="stat-value" style={{ fontSize: 18 }}>{topSubcat}</div><div className="stat-label">TOP 子分类</div></div>
@@ -160,11 +160,11 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
               <XAxis type="number" />
               <YAxis type="category" dataKey="name" width={45} tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Bar dataKey="freq" name="频次" fill={CHART_COLORS_RAW[3]} radius={[0, 4, 4, 0]} animationDuration={800} />
+              <Bar dataKey="freq" name="证据条数" fill={CHART_COLORS_RAW[3]} radius={[0, 4, 4, 0]} animationDuration={800} />
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <WeightedWordCloud title="痛点主题词云" description="词越大频次越高" words={negWords} />
+        <WeightedWordCloud title="痛点主题词云" description="词越大证据条数越高" words={negWords} />
       </div>
 
       {subcatBarData.length > 0 && (
@@ -175,7 +175,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
               <XAxis type="number" />
               <YAxis type="category" dataKey="name" width={115} tick={{ fontSize: 11 }} />
               <Tooltip />
-              <Bar dataKey="freq" name="频次" radius={[0, 4, 4, 0]} animationDuration={800}>
+              <Bar dataKey="freq" name="证据条数" radius={[0, 4, 4, 0]} animationDuration={800}>
                 {subcatBarData.map((entry) => (
                   <rect key={entry.name} fill={PAIN_CATEGORY_COLORS[entry.parent] || CHART_COLORS_RAW[0]} />
                 ))}
@@ -196,7 +196,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
       {heatCountries.length > 0 && (
         <HeatmapMatrix
           title="国家 x 痛点大类 热力图"
-          description="数值 = 频次，颜色越深该国该类痛点越集中"
+          description="数值 = 证据条数，颜色越深该国该类痛点越集中"
           rows={heatCountries}
           columns={PAIN_CATEGORIES}
           cells={heatPainCells}
@@ -210,7 +210,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
             <thead>
               <tr>
                 <th>国家</th><th>品线</th><th>平台</th><th>痛点</th>
-                <th>子分类</th><th>主题</th><th>强度</th><th>频次</th><th>操作</th>
+                <th>子分类</th><th>主题</th><th>强度</th><th>证据</th><th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -227,7 +227,7 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
                       <td style={{ fontSize: 12 }}>{s(r.pain_subcategory) || "—"}</td>
                       <td style={{ fontSize: 12 }}>{themeDisplay}</td>
                       <td><span style={{ color: INTENSITY_COLOR[s(r.intensity)] || "inherit", fontWeight: 600 }}>{s(r.intensity)}</span></td>
-                      <td>{n(r.frequency) || 1}</td>
+                      <td>1</td>
                       <td>
                         <button
                           style={{ fontSize: 11, padding: "2px 6px", cursor: "pointer" }}
@@ -273,10 +273,10 @@ const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry
 
       <InsightCallout
         title="痛点深挖洞察"
-        summary={`当前范围共 ${filtered.length} 条负面记录，频次合计 ${totalFreq}。高强度占 ${filtered.length > 0 ? Math.round((highIntensity / filtered.length) * 100) : 0}%，最集中的大类为「${topPain}」，最集中的子分类为「${topSubcat}」。`}
+        summary={`当前范围共 ${filtered.length} 条负面记录（证据条数）。高强度占 ${filtered.length > 0 ? Math.round((highIntensity / filtered.length) * 100) : 0}%，最集中的大类为「${topPain}」，最集中的子分类为「${topSubcat}」。`}
         bullets={[
-          `「${topSubcat}」是品线维度最突出的痛点子分类，频次 ${subcatBarData[0]?.freq || 0}`,
-          `功能类和体验类合计占负面声量的 ${painBarData.filter((p) => p.name === "功能" || p.name === "体验").reduce((s, p) => s + p.freq, 0)} 频次`,
+          `「${topSubcat}」是品线维度最突出的痛点子分类，证据 ${subcatBarData[0]?.freq || 0} 条`,
+          `功能类和体验类合计证据 ${painBarData.filter((p) => p.name === "功能" || p.name === "体验").reduce((s, p) => s + p.freq, 0)} 条`,
           subcatBarData.length > 1
             ? `排名前三的子分类为：${subcatBarData.slice(0, 3).map((d) => d.name).join("、")}`
             : "数据量较少，建议扩大采集范围",

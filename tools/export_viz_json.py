@@ -38,6 +38,7 @@ from tools.cleaning import (
 
 OUTPUT_COUNTRY = DELIVERY_DIR / "viz_country_insight.json"
 OUTPUT_OPPORTUNITY = DELIVERY_DIR / "viz_opportunity.json"
+OUTPUT_OPPORTUNITY_INTERNAL = DELIVERY_DIR / "viz_opportunity_internal.json"
 OUTPUT_MERGED = DELIVERY_DIR / "viz_dataset.json"
 
 CSV_SOURCE_FILES = [
@@ -55,6 +56,8 @@ CSV_SOURCE_FILES = [
     "voc_summary_persona_flat.csv",
     "dim_voc_negative_extract.csv",
 ]
+
+INTERNAL_BATCH_PREFIX = "MOMCOZY-"
 
 
 def build_countries(personas, top20, keywords) -> list[dict]:
@@ -131,6 +134,19 @@ def build_competitor_ingest_meta(voc_negative: list[dict]) -> dict:
     }
 
 
+def split_voc_negative(voc_negative: list[dict]) -> tuple[list[dict], list[dict]]:
+    """Split VOC rows into public(competitor/external) and internal datasets by batch prefix."""
+    internal_rows: list[dict] = []
+    public_rows: list[dict] = []
+    for r in voc_negative:
+        batch = (r.get("batch_code") or "")
+        if batch.startswith(INTERNAL_BATCH_PREFIX):
+            internal_rows.append(r)
+        else:
+            public_rows.append(r)
+    return public_rows, internal_rows
+
+
 def main():
     print("Building sections from CSV files...")
 
@@ -176,11 +192,29 @@ def main():
     countries = build_countries(personas, top20, keywords)
     print(f"  countries: {len(countries)} rows")
 
-    voc_timeline = build_voc_timeline(voc_negative)
-    print(f"  voc_timeline: {len(voc_timeline)} rows")
+    public_voc_negative, internal_voc_negative = split_voc_negative(voc_negative)
+    print(f"  voc_negative_public: {len(public_voc_negative)} rows")
+    print(f"  voc_negative_internal: {len(internal_voc_negative)} rows")
 
-    competitor_meta = build_competitor_ingest_meta(voc_negative)
+    voc_timeline = build_voc_timeline(public_voc_negative)
+    print(f"  voc_timeline_public: {len(voc_timeline)} rows")
+    voc_timeline_internal = build_voc_timeline(internal_voc_negative)
+    print(f"  voc_timeline_internal: {len(voc_timeline_internal)} rows")
+
+    competitor_meta = build_competitor_ingest_meta(public_voc_negative)
     print(f"  competitor_ingest: {'yes' if competitor_meta['has_competitor_data'] else 'no'}")
+
+    internal_brand_dist: dict[str, int] = {}
+    for r in internal_voc_negative:
+        b = r.get("competitor_brand", "unknown")
+        internal_brand_dist[b] = internal_brand_dist.get(b, 0) + 1
+    internal_meta = {
+        "has_internal_data": len(internal_voc_negative) > 0,
+        "total_internal_rows": len(internal_voc_negative),
+        "total_internal_frequency": sum((r.get("frequency", 0) or 0) for r in internal_voc_negative),
+        "brand_distribution": dict(sorted(internal_brand_dist.items(), key=lambda x: -x[1])),
+        "batches": sorted(set((r.get("batch_code") or "") for r in internal_voc_negative if r.get("batch_code"))),
+    }
 
     now = datetime.now(timezone.utc).isoformat()
     base_meta = {
@@ -210,10 +244,22 @@ def main():
         "trust_sources": trust_sources,
         "voc_summary": voc_summary,
         "voc_persona_summary": voc_persona_summary,
-        "voc_negative": voc_negative,
+        "voc_negative": public_voc_negative,
         "p1_search": p1_search,
         "voc_timeline": voc_timeline,
         "competitor_ingest_meta": competitor_meta,
+    }
+
+    opportunity_internal = {
+        "meta": {**base_meta, "dashboard": "opportunity_internal"},
+        "platforms": platforms,
+        "trust_sources": trust_sources,
+        "voc_summary": voc_summary,
+        "voc_persona_summary": voc_persona_summary,
+        "voc_negative": internal_voc_negative,
+        "p1_search": p1_search,
+        "voc_timeline": voc_timeline_internal,
+        "internal_ingest_meta": internal_meta,
     }
 
     merged = {
@@ -232,7 +278,7 @@ def main():
         "voc_summary": voc_summary,
         "voc_persona_summary": voc_persona_summary,
         "voc_negative": voc_negative,
-        "voc_timeline": voc_timeline,
+        "voc_timeline": build_voc_timeline(voc_negative),
         "competitor_ingest_meta": competitor_meta,
     }
 
@@ -240,6 +286,7 @@ def main():
     for path, data, label in [
         (OUTPUT_COUNTRY, country_insight, "country_insight"),
         (OUTPUT_OPPORTUNITY, opportunity, "opportunity"),
+        (OUTPUT_OPPORTUNITY_INTERNAL, opportunity_internal, "opportunity_internal"),
         (OUTPUT_MERGED, merged, "merged"),
     ]:
         with open(path, "w", encoding="utf-8") as f:

@@ -22,7 +22,6 @@ const PAIN_COLORS: Record<string, string> = {
 
 const METRIC_OPTIONS = [
   { label: "负面条目数", value: "count" },
-  { label: "频次合计", value: "frequency" },
   { label: "高强度占比", value: "high_intensity_pct" },
 ];
 
@@ -68,9 +67,8 @@ const TimelineTrendSection = forwardRef<HTMLElement, Props>(({ data, filterCount
       if (!period || !pain) continue;
       if (!periodMap[period]) periodMap[period] = {};
       const count = n(r.count);
-      const freq = n(r.frequency);
       const highInt = count > 0 ? (n(r.high_intensity_count) / count) * 100 : 0;
-      const val = metric === "count" ? count : metric === "frequency" ? freq : highInt;
+      const val = metric === "count" ? count : highInt;
       periodMap[period][pain] = (periodMap[period][pain] || 0) + val;
     }
     return Object.entries(periodMap)
