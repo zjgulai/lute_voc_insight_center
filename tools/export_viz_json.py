@@ -84,21 +84,23 @@ def build_countries(personas, top20, keywords) -> list[dict]:
 
 
 def build_voc_timeline(voc_negative: list[dict]) -> list[dict]:
-    """Aggregate voc_negative by period/country/product_line/pain_category."""
+    """Aggregate voc_negative by period/country/product_line/brand/pain_category."""
     agg: dict[str, dict] = {}
     for r in voc_negative:
         date = r.get("collect_date", "")[:10] or "unknown"
         country = r.get("country", "")
         product_line = r.get("product_line", "")
+        brand = r.get("competitor_brand", "") or "unknown"
         pain = r.get("pain_category", "")
         batch = r.get("batch_code", "")
-        key = f"{date}|{country}|{product_line}|{pain}"
+        key = f"{date}|{country}|{product_line}|{brand}|{pain}"
         if key not in agg:
             agg[key] = {
                 "period": date,
                 "batch_code": batch,
                 "country": country,
                 "product_line": product_line,
+                "competitor_brand": brand,
                 "pain_category": pain,
                 "count": 0,
                 "frequency": 0,

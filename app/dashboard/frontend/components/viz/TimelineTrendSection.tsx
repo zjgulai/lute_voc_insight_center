@@ -8,7 +8,7 @@ import FilterBar from "./FilterBar";
 import { CHART_COLORS_RAW } from "./constants";
 
 type R = Record<string, unknown>;
-interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; }
+interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; filterBrand?: string; }
 function s(v: unknown): string { return String(v ?? ""); }
 function n(v: unknown): number { return typeof v === "number" ? v : 0; }
 
@@ -26,14 +26,15 @@ const METRIC_OPTIONS = [
   { label: "高强度占比", value: "high_intensity_pct" },
 ];
 
-const TimelineTrendSection = forwardRef<HTMLElement, Props>(({ data, filterCountry: extCountry, filterProductLine: extLine }, ref) => {
+const TimelineTrendSection = forwardRef<HTMLElement, Props>(({ data, filterCountry: extCountry, filterProductLine: extLine, filterBrand: extBrand }, ref) => {
   const rawTimeline = ((data as unknown as Record<string, unknown>).voc_timeline ?? []) as R[];
   const timeline = useMemo(() => {
     let rows = rawTimeline;
     if (extCountry && extCountry !== "all") rows = rows.filter((r) => s(r.country) === extCountry);
     if (extLine && extLine !== "all") rows = rows.filter((r) => s(r.product_line) === extLine);
+    if (extBrand && extBrand !== "all") rows = rows.filter((r) => s(r.competitor_brand) === extBrand);
     return rows;
-  }, [rawTimeline, extCountry, extLine]);
+  }, [rawTimeline, extCountry, extLine, extBrand]);
   const [filterCountry, setFilterCountry] = useState("all");
   const [filterLine, setFilterLine] = useState("all");
   const [metric, setMetric] = useState("count");

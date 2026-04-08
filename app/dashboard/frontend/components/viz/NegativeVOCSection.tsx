@@ -10,7 +10,7 @@ import type { WeightedWord } from "../insights";
 import { CHART_COLORS_RAW } from "./constants";
 
 type R = Record<string, unknown>;
-interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; }
+interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; filterBrand?: string; }
 function s(v: unknown): string { return String(v ?? ""); }
 function n(v: unknown): number { return typeof v === "number" ? v : 0; }
 
@@ -30,14 +30,15 @@ const PLATFORM_TYPE_LABELS: Record<string, string> = {
 };
 const PAGE_SIZE = 30;
 
-const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry: extCountry, filterProductLine: extLine }, ref) => {
+const NegativeVOCSection = forwardRef<HTMLElement, Props>(({ data, filterCountry: extCountry, filterProductLine: extLine, filterBrand: extBrand }, ref) => {
   const rawVocNeg = (data.voc_negative ?? []) as R[];
   const vocNeg = useMemo(() => {
     let rows = rawVocNeg;
     if (extCountry && extCountry !== "all") rows = rows.filter((r) => s(r.country) === extCountry);
     if (extLine && extLine !== "all") rows = rows.filter((r) => s(r.product_line) === extLine);
+    if (extBrand && extBrand !== "all") rows = rows.filter((r) => s(r.competitor_brand) === extBrand);
     return rows;
-  }, [rawVocNeg, extCountry, extLine]);
+  }, [rawVocNeg, extCountry, extLine, extBrand]);
 
   const [filterCountry, setFilterCountry] = useState("all");
   const [filterLine, setFilterLine] = useState("all");

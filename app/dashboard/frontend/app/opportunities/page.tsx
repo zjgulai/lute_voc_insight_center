@@ -18,7 +18,7 @@ import {
 type R = Record<string, unknown>;
 function s(v: unknown): string { return String(v ?? ""); }
 
-type SectionProps = { data: VizDataset; filterCountry?: string; filterProductLine?: string };
+type SectionProps = { data: VizDataset; filterCountry?: string; filterProductLine?: string; filterBrand?: string };
 type SectionComponent = ForwardRefExoticComponent<SectionProps & RefAttributes<HTMLElement>>;
 
 const SECTION_MAP: Record<string, SectionComponent> = {

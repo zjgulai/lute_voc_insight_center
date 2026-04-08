@@ -12,18 +12,26 @@ const PAIN_CATEGORY_COLORS: Record<string, string> = {
   "服务": "#8b5cf6", "安全": "#ec4899",
 };
 
-interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; }
+interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; filterBrand?: string; }
 
-const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry, filterProductLine }, ref) => {
+const OpportunitySummarySection = forwardRef<HTMLElement, Props>(({ data, filterCountry, filterProductLine, filterBrand }, ref) => {
   const rawVocNeg = ((data as unknown as R).voc_negative ?? []) as R[];
   const vocNeg = useMemo(() => {
     let rows = rawVocNeg;
     if (filterCountry && filterCountry !== "all") rows = rows.filter((r) => s(r.country) === filterCountry);
     if (filterProductLine && filterProductLine !== "all") rows = rows.filter((r) => s(r.product_line) === filterProductLine);
+    if (filterBrand && filterBrand !== "all") rows = rows.filter((r) => s(r.competitor_brand) === filterBrand);
     return rows;
-  }, [rawVocNeg, filterCountry, filterProductLine]);
+  }, [rawVocNeg, filterCountry, filterProductLine, filterBrand]);
   const platforms = (data.platforms ?? []) as R[];
-  const timeline = ((data as unknown as R).voc_timeline ?? []) as R[];
+  const rawTimeline = ((data as unknown as R).voc_timeline ?? []) as R[];
+  const timeline = useMemo(() => {
+    let rows = rawTimeline;
+    if (filterCountry && filterCountry !== "all") rows = rows.filter((r) => s(r.country) === filterCountry);
+    if (filterProductLine && filterProductLine !== "all") rows = rows.filter((r) => s(r.product_line) === filterProductLine);
+    if (filterBrand && filterBrand !== "all") rows = rows.filter((r) => s(r.competitor_brand) === filterBrand);
+    return rows;
+  }, [rawTimeline, filterCountry, filterProductLine, filterBrand]);
   const compMeta = (data as unknown as R).competitor_ingest_meta as R | undefined;
 
   const insights = useMemo(() => {

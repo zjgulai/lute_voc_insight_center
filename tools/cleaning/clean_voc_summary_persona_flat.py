@@ -3,7 +3,7 @@
 from __future__ import annotations
 from ._common import (
     read_csv_table, clean_str, clean_num, clean_int, get_code,
-    normalize_product_line, normalize_platform_type, TABLES_DIR,
+    normalize_product_line, normalize_platform_type, infer_platform_type_from_name, TABLES_DIR,
 )
 
 
@@ -16,13 +16,16 @@ def build() -> list[dict]:
             continue
         total = clean_int(r.get("有效评论数")) or 0
         neg = clean_int(r.get("负向数")) or 0
+        platform = clean_str(r.get("平台")) or clean_str(r.get("涉及平台列表"))
+        platform_type_raw = clean_str(r.get("平台类型"))
+        platform_type = normalize_platform_type(platform_type_raw) if platform_type_raw else infer_platform_type_from_name(platform)
         result.append({
             "country": country,
             "country_code": get_code(country),
             "cluster": clean_str(r.get("区域cluster")),
             "product_line": normalize_product_line(r.get("产品品线")),
-            "platform_type": normalize_platform_type(r.get("平台类型")),
-            "platform": clean_str(r.get("平台")),
+            "platform_type": platform_type,
+            "platform": platform,
             "segment_code": clean_str(r.get("画像编码")),
             "segment_name": clean_str(r.get("画像名称")),
             "lifecycle": clean_str(r.get("生命周期")),

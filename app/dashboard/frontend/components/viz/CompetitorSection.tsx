@@ -9,21 +9,22 @@ import { HeatmapMatrix, InsightCallout } from "../insights";
 import { CHART_COLORS_RAW } from "./constants";
 
 type R = Record<string, unknown>;
-interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; }
+interface Props { data: VizDataset; filterCountry?: string; filterProductLine?: string; filterBrand?: string; }
 function s(v: unknown): string { return String(v ?? ""); }
 function n(v: unknown): number { return typeof v === "number" ? v : 0; }
 
 const PAIN_CATEGORIES = ["功能", "价格", "体验", "服务", "安全"];
 const INTENSITY_RAW: Record<string, string> = { "高": "#ef4444", "中": "#f59e0b", "低": "#94a3b8" };
 
-const CompetitorSection = forwardRef<HTMLElement, Props>(({ data, filterCountry, filterProductLine }, ref) => {
+const CompetitorSection = forwardRef<HTMLElement, Props>(({ data, filterCountry, filterProductLine, filterBrand }, ref) => {
   const rawVocNeg = ((data as unknown as R).voc_negative ?? []) as R[];
   const vocNeg = useMemo(() => {
     let rows = rawVocNeg;
     if (filterCountry && filterCountry !== "all") rows = rows.filter((r) => s(r.country) === filterCountry);
     if (filterProductLine && filterProductLine !== "all") rows = rows.filter((r) => s(r.product_line) === filterProductLine);
+    if (filterBrand && filterBrand !== "all") rows = rows.filter((r) => s(r.competitor_brand) === filterBrand);
     return rows;
-  }, [rawVocNeg, filterCountry, filterProductLine]);
+  }, [rawVocNeg, filterCountry, filterProductLine, filterBrand]);
 
   const brands = useMemo(() => {
     const set = new Set(vocNeg.map((r) => s(r.competitor_brand)).filter(Boolean));

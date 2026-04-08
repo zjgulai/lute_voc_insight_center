@@ -51,6 +51,17 @@ PLATFORM_TYPE_MAP: dict[str, str] = {
     "竞品官方电商": "competitor_dtc", "第三方评测类": "third_party_review",
 }
 
+DEFAULT_SEGMENT_BY_LINE: dict[str, tuple[str, str, str]] = {
+    "吸奶器": ("SEG01", "产后建奶新手妈妈", "产后0-6月"),
+    "喂养电器": ("SEG02", "精细喂养效率型妈妈", "0-12月"),
+    "家居出行": ("SEG03", "出行场景育儿家庭", "孕晚期-24月"),
+    "内衣服饰": ("SEG04", "孕产护理妈妈", "孕期-产后6月"),
+    "护理电器": ("SEG05", "清洁护理妈妈", "0-12月"),
+    "母婴综合护理": ("SEG06", "综合护理家庭", "孕期-24月"),
+    "智能母婴电器": ("SEG07", "智能育儿家庭", "0-24月"),
+    "家居家纺": ("SEG08", "家居布品家庭", "孕期-24月"),
+}
+
 PRIORITY_VALID = {"P0", "P1", "P2", "P3"}
 
 BRAND_NORMALIZE_MAP: dict[str, str] = {
@@ -198,6 +209,27 @@ def normalize_priority(v: str | None) -> str:
 def normalize_platform_type(v: str | None) -> str:
     s = clean_str(v) or ""
     return PLATFORM_TYPE_MAP.get(s, "other")
+
+
+def get_default_segment(product_line: str | None) -> tuple[str, str, str]:
+    return DEFAULT_SEGMENT_BY_LINE.get(product_line or "", ("SEG99", "综合育儿用户", "孕期-24月"))
+
+
+def infer_platform_type_from_name(platform: str | None) -> str:
+    p = (clean_str(platform) or "").lower()
+    if not p:
+        return "other"
+    if any(x in p for x in ["reddit", "mumsnet", "netmums", "babycenter", "whattoexpect", "urbia", "forum"]):
+        return "vertical_community"
+    if any(x in p for x in ["trustpilot", "babygearlab", "wirecutter", "review"]):
+        return "third_party_review"
+    if any(x in p for x in ["instagram", "facebook", "tiktok", "youtube", "x.com", "twitter"]):
+        return "social_media"
+    if any(x in p for x in ["shopify", "momcozy", "official", "官网", "独立站"]):
+        return "competitor_dtc"
+    if any(x in p for x in ["amazon", "walmart", "ebay", "tmall", "jd", "shopee", "noon", "bestbuy"]):
+        return "ecommerce"
+    return "other"
 
 
 # ── CSV 读取 ──

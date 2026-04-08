@@ -5,6 +5,7 @@ from ._common import (
     read_csv_table, clean_str, clean_int, get_code,
     normalize_product_line, normalize_platform_type, normalize_brand,
     infer_pain_subcategory, is_chinese_text, PAIN_SUBCATEGORY_PARENT,
+    get_default_segment,
     TABLES_DIR,
 )
 
@@ -22,7 +23,7 @@ def build() -> list[dict]:
             continue
 
         url = clean_str(r.get("来源URL")) or ""
-        original_text = clean_str(r.get("负面原文摘录(本地语言)")) or ""
+        original_text = (clean_str(r.get("负面原文摘录(本地语言)")) or "")[:600]
         text_prefix = original_text[:50]
         dedup_key = f"{url}||{text_prefix}"
         if dedup_key in seen_keys:
@@ -53,6 +54,14 @@ def build() -> list[dict]:
         translated = clean_str(r.get("负面原文摘录(中文翻译)"))
         if translated and not is_chinese_text(translated):
             translated = None
+        if translated:
+            translated = translated[:300]
+
+        segment_code = clean_str(r.get("画像编码"))
+        segment_name = clean_str(r.get("画像名称"))
+        lifecycle = clean_str(r.get("生命周期"))
+        if not segment_code or not segment_name or not lifecycle:
+            segment_code, segment_name, lifecycle = get_default_segment(product_line)
 
         result.append({
             "country": country,
@@ -61,9 +70,9 @@ def build() -> list[dict]:
             "product_line": product_line,
             "platform_type": normalize_platform_type(r.get("平台类型")),
             "platform": clean_str(r.get("平台")),
-            "segment_code": clean_str(r.get("画像编码")),
-            "segment_name": clean_str(r.get("画像名称")),
-            "lifecycle": clean_str(r.get("生命周期")),
+            "segment_code": segment_code,
+            "segment_name": segment_name,
+            "lifecycle": lifecycle,
             "pain_category": pain_cat,
             "pain_subcategory": subcat,
             "negative_theme": neg_theme or None,
