@@ -1,0 +1,40 @@
+[START] DTC API batch ingest
+
+[BRAND] Momcozy (Okendo API)
+  [OKENDO] M5 Wearable Breast Pump page 1 ...
+    [PAGE] 30 reviews, 0 negative so far
+  [OKENDO] M5 Wearable Breast Pump: 0 negative reviews found
+  [OKENDO] M6 Mobile Breast Pump page 1 ...
+    [PAGE] 50 reviews, 28 negative so far
+  [OKENDO] M6 Mobile Breast Pump page 2 ...
+    [WARN] Fetch failed: HTTP Error 403: Forbidden
+  [OKENDO] M6 Mobile Breast Pump: 28 negative reviews found
+  [OKENDO] Air 1 Ultra-slim Breast Pump page 1 ...
+    [PAGE] 40 reviews, 2 negative so far
+  [OKENDO] Air 1 Ultra-slim Breast Pump: 2 negative reviews found
+  [OKENDO] BM04 Baby Monitor page 1 ...
+    [PAGE] 50 reviews, 2 negative so far
+  [OKENDO] BM04 Baby Monitor page 2 ...
+    [WARN] Fetch failed: HTTP Error 403: Forbidden
+  [OKENDO] BM04 Baby Monitor: 2 negative reviews found
+  [TOTAL] Momcozy: 32 negative records
+
+[BRAND] Elvie (Google search)
+  [SEARCH] Elvie pump review disappointed OR broken OR refund OR terrib...
+    [WARN] Search failed: HTTP Error 451: Unavailable For Legal Reasons
+  [TOTAL] Elvie: 0 negative records from Google
+
+[BRAND] Baby Brezza (Google search)
+  [SEARCH] Baby Brezza formula pro review disappointed OR broken OR def...
+    [WARN] Search failed: HTTP Error 451: Unavailable For Legal Reasons
+  [TOTAL] Baby Brezza: 0 negative records from Google
+
+[BRAND] Bugaboo (Google search)
+  [SEARCH] Bugaboo stroller review disappointed OR broken OR quality is...
+    [WARN] Search failed: HTTP Error 451: Unavailable For Legal Reasons
+  [TOTAL] Bugaboo: 0 negative records from Google
+
+============================================================
+[TOTAL] Collected 32 DTC negative review records
+[APPEND] 31 new rows to CSV
+[DONE] Appended 31 new rows to CSV

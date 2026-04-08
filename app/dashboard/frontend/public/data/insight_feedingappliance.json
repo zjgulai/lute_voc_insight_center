@@ -1,0 +1,654 @@
+{
+  "product_line": "喂养电器",
+  "scope": {
+    "countries": [
+      "美国",
+      "加拿大",
+      "英国",
+      "德国",
+      "法国"
+    ],
+    "total_records": 125
+  },
+  "generated_at": "2026-04-08T00:53:11.274757+00:00",
+  "framework_4p": {
+    "Product": {
+      "total_records": 44,
+      "frequency_sum": 44,
+      "high_intensity_count": 24,
+      "high_intensity_ratio": 54.5,
+      "top_subcategories": [
+        {
+          "name": "过热/安全隐患",
+          "count": 14
+        },
+        {
+          "name": "产品损坏/停止运转",
+          "count": 8
+        },
+        {
+          "name": "加热功能失效",
+          "count": 7
+        },
+        {
+          "name": "材质/气味问题",
+          "count": 4
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Tommee Tippee",
+          "count": 18
+        },
+        {
+          "name": "Baby Brezza",
+          "count": 7
+        },
+        {
+          "name": "Philips Avent",
+          "count": 5
+        },
+        {
+          "name": "Philips Avent UK",
+          "count": 4
+        },
+        {
+          "name": "Medela",
+          "count": 2
+        }
+      ],
+      "brand_quality_score": {
+        "Tommee Tippee": 61.1,
+        "Baby Brezza": 42.9,
+        "Philips Avent": 0.0,
+        "Philips Avent UK": 75.0,
+        "Medela": 0.0,
+        "Chicco": 100.0,
+        "Dr. Browns": 100.0,
+        "NUK": 0.0,
+        "Tex Baby": 0.0
+      },
+      "insight": "TOP 子分类：过热/安全隐患（14条） | 最多被提及品牌：Tommee Tippee（18条） | 高强度占比 54.5%",
+      "recommendation": "优先解决 过热/安全隐患，降低高强度比（当前 54.5%）"
+    },
+    "Price": {
+      "total_records": 6,
+      "frequency_sum": 6,
+      "high_intensity_count": 2,
+      "high_intensity_ratio": 33.3,
+      "top_subcategories": [
+        {
+          "name": "整体性价比低",
+          "count": 4
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Philips Avent UK",
+          "count": 3
+        },
+        {
+          "name": "Tommee Tippee",
+          "count": 2
+        },
+        {
+          "name": "Baby Brezza",
+          "count": 1
+        }
+      ],
+      "brand_quality_score": {
+        "Philips Avent UK": 66.7,
+        "Tommee Tippee": 50.0,
+        "Baby Brezza": 100.0
+      },
+      "insight": "TOP 子分类：整体性价比低（4条） | 最多被提及品牌：Philips Avent UK（3条） | 高强度占比 33.3%",
+      "recommendation": "价格敏感主要来自 Philips Avent UK 用户群，建议差异化定价"
+    },
+    "Place": {
+      "total_records": 34,
+      "frequency_sum": 34,
+      "high_intensity_count": 5,
+      "high_intensity_ratio": 14.7,
+      "top_subcategories": [
+        {
+          "name": "售后/退款困难",
+          "count": 25
+        },
+        {
+          "name": "发货延迟",
+          "count": 5
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Philips Avent UK",
+          "count": 21
+        },
+        {
+          "name": "Tommee Tippee",
+          "count": 9
+        },
+        {
+          "name": "Baby Brezza",
+          "count": 4
+        }
+      ],
+      "brand_quality_score": {
+        "Philips Avent UK": 81.0,
+        "Tommee Tippee": 100.0,
+        "Baby Brezza": 75.0
+      },
+      "insight": "TOP 子分类：售后/退款困难（25条） | 最多被提及品牌：Philips Avent UK（21条） | 高强度占比 14.7%",
+      "recommendation": "渠道服务痛点集中于 售后/退款困难，建议加强本地化售后"
+    },
+    "Promotion": {
+      "total_records": 41,
+      "frequency_sum": 43,
+      "high_intensity_count": 6,
+      "high_intensity_ratio": 14.6,
+      "top_subcategories": [
+        {
+          "name": "清洗困难/卫生问题",
+          "count": 7
+        },
+        {
+          "name": "漏水/密封问题",
+          "count": 4
+        },
+        {
+          "name": "噪音/震动问题",
+          "count": 2
+        }
+      ],
+      "top_brands": [
+        {
+          "name": "Tommee Tippee",
+          "count": 21
+        },
+        {
+          "name": "Philips Avent UK",
+          "count": 12
+        },
+        {
+          "name": "Baby Brezza",
+          "count": 5
+        },
+        {
+          "name": "Philips Avent",
+          "count": 2
+        },
+        {
+          "name": "MAM",
+          "count": 1
+        }
+      ],
+      "brand_quality_score": {
+        "Tommee Tippee": 90.5,
+        "Philips Avent UK": 75.0,
+        "Baby Brezza": 80.0,
+        "Philips Avent": 100.0,
+        "MAM": 100.0
+      },
+      "insight": "TOP 子分类：清洗困难/卫生问题（7条） | 最多被提及品牌：Tommee Tippee（21条） | 高强度占比 14.6%",
+      "recommendation": "体验类投诉高强度比 14.6%，宣传时避免过度承诺使用便利性"
+    }
+  },
+  "nps_proxy": {
+    "by_brand": {
+      "Baby Brezza": 69.4,
+      "Tommee Tippee": 83.2,
+      "Philips Avent UK": 68.5,
+      "Philips Avent": 100.0,
+      "Chicco": 100.0,
+      "MAM": 100.0,
+      "Medela": 100.0,
+      "Dr. Browns": 100.0,
+      "NUK": 100.0,
+      "Tex Baby": 60.0
+    },
+    "by_country": {
+      "美国": 87.5,
+      "英国": 43.7,
+      "加拿大": 60.0,
+      "德国": 100.0,
+      "法国": 60.0
+    },
+    "brand_detail": {
+      "Baby Brezza": {
+        "composite": 69.4,
+        "functional": 50.0,
+        "experience": 80.0,
+        "price_perception": 94.1,
+        "service": 75.0,
+        "record_count": 17
+      },
+      "Tommee Tippee": {
+        "composite": 83.2,
+        "functional": 66.7,
+        "experience": 90.5,
+        "price_perception": 96.0,
+        "service": 100.0,
+        "record_count": 50
+      },
+      "Philips Avent UK": {
+        "composite": 68.5,
+        "functional": 50.0,
+        "experience": 75.0,
+        "price_perception": 92.5,
+        "service": 81.0,
+        "record_count": 40
+      },
+      "Philips Avent": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 7
+      },
+      "Chicco": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 1
+      },
+      "MAM": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 1
+      },
+      "Medela": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 2
+      },
+      "Dr. Browns": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 1
+      },
+      "NUK": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 1
+      },
+      "Tex Baby": {
+        "composite": 60.0,
+        "functional": 0.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 1
+      }
+    },
+    "country_detail": {
+      "美国": {
+        "composite": 87.5,
+        "functional": 85.7,
+        "experience": 85.3,
+        "price_perception": 96.9,
+        "service": 87.5,
+        "record_count": 96
+      },
+      "英国": {
+        "composite": 43.7,
+        "functional": 0.0,
+        "experience": 80.0,
+        "price_perception": 81.2,
+        "service": 50.0,
+        "record_count": 16
+      },
+      "加拿大": {
+        "composite": 60.0,
+        "functional": 0.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 4
+      },
+      "德国": {
+        "composite": 100.0,
+        "functional": 100.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 6
+      },
+      "法国": {
+        "composite": 60.0,
+        "functional": 0.0,
+        "experience": 100.0,
+        "price_perception": 100.0,
+        "service": 100.0,
+        "record_count": 3
+      }
+    },
+    "detractors_drivers": [
+      "过热/安全隐患（11条高强度）",
+      "售后/退款困难（4条高强度）",
+      "材质/气味问题（4条高强度）",
+      "产品损坏/停止运转（4条高强度）"
+    ],
+    "passives_drivers": [
+      "售后/退款困难（21条中等）",
+      "清洗困难/卫生问题（6条中等）",
+      "加热功能失效（5条中等）",
+      "漏水/密封问题（4条中等）"
+    ],
+    "insight": "NPS 代理得分范围 60.0 ~ 100.0。 Tex Baby 综合分最低（60.0），主要拖累维度为功能（0.0）。",
+    "recommendation": "优先改善 过热/安全隐患（11条高强度），可挽回 88 条中等不满用户"
+  },
+  "country_comparison": {
+    "pain_heatmap": [
+      {
+        "country": "加拿大",
+        "pain_category": "功能",
+        "frequency": 2
+      },
+      {
+        "country": "加拿大",
+        "pain_category": "安全",
+        "frequency": 1
+      },
+      {
+        "country": "加拿大",
+        "pain_category": "体验",
+        "frequency": 1
+      },
+      {
+        "country": "德国",
+        "pain_category": "安全",
+        "frequency": 6
+      },
+      {
+        "country": "法国",
+        "pain_category": "安全",
+        "frequency": 1
+      },
+      {
+        "country": "法国",
+        "pain_category": "体验",
+        "frequency": 1
+      },
+      {
+        "country": "法国",
+        "pain_category": "功能",
+        "frequency": 1
+      },
+      {
+        "country": "美国",
+        "pain_category": "服务",
+        "frequency": 32
+      },
+      {
+        "country": "美国",
+        "pain_category": "体验",
+        "frequency": 36
+      },
+      {
+        "country": "美国",
+        "pain_category": "功能",
+        "frequency": 14
+      },
+      {
+        "country": "美国",
+        "pain_category": "价格",
+        "frequency": 3
+      },
+      {
+        "country": "美国",
+        "pain_category": "安全",
+        "frequency": 13
+      },
+      {
+        "country": "英国",
+        "pain_category": "安全",
+        "frequency": 4
+      },
+      {
+        "country": "英国",
+        "pain_category": "价格",
+        "frequency": 3
+      },
+      {
+        "country": "英国",
+        "pain_category": "服务",
+        "frequency": 2
+      },
+      {
+        "country": "英国",
+        "pain_category": "体验",
+        "frequency": 5
+      },
+      {
+        "country": "英国",
+        "pain_category": "功能",
+        "frequency": 2
+      }
+    ],
+    "brand_dominance_by_country": {
+      "美国": {
+        "Tommee Tippee": 40,
+        "Philips Avent UK": 35,
+        "Baby Brezza": 15
+      },
+      "英国": {
+        "Tommee Tippee": 9,
+        "Philips Avent UK": 5,
+        "MAM": 1
+      },
+      "加拿大": {
+        "Baby Brezza": 2,
+        "Tommee Tippee": 1,
+        "Philips Avent": 1
+      },
+      "德国": {
+        "Philips Avent": 2,
+        "Medela": 2
+      },
+      "法国": {
+        "Philips Avent": 2,
+        "Tex Baby": 1
+      }
+    },
+    "insight": "覆盖 5 个国家，各国痛点分布存在差异"
+  },
+  "competitive_intelligence": {
+    "brand_vulnerability_matrix": {
+      "Baby Brezza": {
+        "total": 17,
+        "high_ratio": 35.3,
+        "功能": "中",
+        "体验": "高",
+        "价格": "中",
+        "服务": "高",
+        "安全": "高"
+      },
+      "Chicco": {
+        "total": 1,
+        "high_ratio": 0.0,
+        "功能": "极高",
+        "体验": "低",
+        "价格": "低",
+        "服务": "低",
+        "安全": "低"
+      },
+      "Dr. Browns": {
+        "total": 1,
+        "high_ratio": 0.0,
+        "功能": "极高",
+        "体验": "低",
+        "价格": "低",
+        "服务": "低",
+        "安全": "低"
+      },
+      "MAM": {
+        "total": 1,
+        "high_ratio": 0.0,
+        "功能": "低",
+        "体验": "极高",
+        "价格": "低",
+        "服务": "低",
+        "安全": "低"
+      },
+      "Medela": {
+        "total": 2,
+        "high_ratio": 100.0,
+        "功能": "低",
+        "体验": "低",
+        "价格": "低",
+        "服务": "低",
+        "安全": "极高"
+      },
+      "NUK": {
+        "total": 1,
+        "high_ratio": 100.0,
+        "功能": "低",
+        "体验": "低",
+        "价格": "低",
+        "服务": "低",
+        "安全": "极高"
+      },
+      "Philips Avent": {
+        "total": 7,
+        "high_ratio": 71.4,
+        "功能": "低",
+        "体验": "高",
+        "价格": "低",
+        "服务": "低",
+        "安全": "极高"
+      },
+      "Philips Avent UK": {
+        "total": 40,
+        "high_ratio": 22.5,
+        "功能": "低",
+        "体验": "高",
+        "价格": "中",
+        "服务": "极高",
+        "安全": "低"
+      },
+      "Tex Baby": {
+        "total": 1,
+        "high_ratio": 100.0,
+        "功能": "极高",
+        "体验": "低",
+        "价格": "低",
+        "服务": "低",
+        "安全": "低"
+      },
+      "Tommee Tippee": {
+        "total": 50,
+        "high_ratio": 20.0,
+        "功能": "高",
+        "体验": "极高",
+        "价格": "低",
+        "服务": "高",
+        "安全": "中"
+      }
+    },
+    "whitespace_opportunities": [
+      "Medela 高强度比最高（100.0%），可作为差异化突破口"
+    ],
+    "insight": "共识别 10 个竞品品牌的脆弱性分布"
+  },
+  "summary_bullets": [
+    "本次分析覆盖 5 个国家、10 个竞品品牌、125 条负面记录，高强度占比 30%",
+    "Product 维度：过热/安全隐患 是最突出的产品缺陷（14条），高强度比 54.5%",
+    "NPS 代理：Tex Baby 综合分最低（60.0分），是主要竞品薄弱品牌",
+    "强烈不满用户（Detractors）核心驱动因素：过热/安全隐患（11条高强度）",
+    "竞争情报：Baby Brezza, Medela, NUK 的高强度投诉比超过 30%，为我方差异化突破窗口",
+    "喂养电器安全警报：安全类投诉占比 20%，过热/着火/塑料气味是核心风险，涉及 6 个品牌",
+    "子品类拆分：其他喂养电器 投诉最集中（83条），安全占比 6.0%"
+  ],
+  "feeding_specific": {
+    "sub_product_breakdown": {
+      "其他喂养电器": {
+        "count": 83,
+        "high_ratio": 16.9,
+        "safety_count": 5,
+        "safety_ratio": 6.0,
+        "top_brands": {
+          "Philips Avent UK": 39,
+          "Tommee Tippee": 33,
+          "Baby Brezza": 10
+        }
+      },
+      "冲奶机": {
+        "count": 13,
+        "high_ratio": 38.5,
+        "safety_count": 2,
+        "safety_ratio": 15.4,
+        "top_brands": {
+          "Tommee Tippee": 8,
+          "Baby Brezza": 4,
+          "Philips Avent UK": 1
+        }
+      },
+      "暖奶器": {
+        "count": 11,
+        "high_ratio": 54.5,
+        "safety_count": 7,
+        "safety_ratio": 63.6,
+        "top_brands": {
+          "Philips Avent": 3,
+          "Tommee Tippee": 2,
+          "Baby Brezza": 1
+        }
+      },
+      "消毒锅": {
+        "count": 18,
+        "high_ratio": 66.7,
+        "safety_count": 11,
+        "safety_ratio": 61.1,
+        "top_brands": {
+          "Tommee Tippee": 7,
+          "Philips Avent": 4,
+          "Baby Brezza": 2
+        }
+      }
+    },
+    "safety_focus": {
+      "total_safety_records": 25,
+      "safety_ratio_overall": 20.0,
+      "top_safety_subcategories": {
+        "过热/安全隐患": 14,
+        "其他": 4,
+        "材质/气味问题": 4,
+        "锈蚀/涂层脱落": 3
+      },
+      "top_safety_brands": {
+        "Tommee Tippee": 6,
+        "Baby Brezza": 5,
+        "Philips Avent": 5,
+        "Philips Avent UK": 2,
+        "Medela": 2
+      },
+      "safety_by_country": {
+        "美国": 13,
+        "英国": 4,
+        "德国": 6,
+        "加拿大": 1,
+        "法国": 1
+      },
+      "insight": "安全类投诉占全部喂养电器投诉的 20%。 Tommee Tippee 是安全投诉最多的品牌（6条）。 过热/安全隐患和材质/气味是最主要的安全子类。",
+      "recommendation": "安全认证（CE/FDA/BPA-free）应作为产品宣传的第一优先级。安全类投诉需要紧急响应机制。"
+    },
+    "market_maturity": {
+      "insight": "喂养电器总投诉量 125 条，远低于吸奶器。 投诉更集中于安全（过热、材质）而非功能细节，表明市场尚在基本品质信任建立阶段。 率先解决安全问题的品牌将获得先发信任优势。"
+    }
+  }
+}

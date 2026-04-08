@@ -1,0 +1,11 @@
+﻿国家,区域cluster,产品品线,画像编码,画像名称,生命周期,痛点大类,负面主题TOP3,典型原文摘要,条目数,高强度占比,涉及平台数,涉及平台列表,竞品品牌TOP3,平均质量分,汇总日期,覆盖批次
+德国,西欧高信任论坛区,吸奶器,SEG01,产后建奶新手妈妈,产后0-3月,安全,材质气味,Das Gerät riecht stark nach Plastik beim ersten Gebrauch. Ist das sicher für die,1,100%,1,Amazon.de,,,2026-04-07,BATCH-P0-DE-001
+德国,西欧高信任论坛区,吸奶器,SEG02,返岗背奶效率妈妈,产后3-12月,体验,噪音大,Viel zu laut für das Büro. Kolleginnen beschweren sich trotz geschlossener Tür,1,0%,1,Amazon.de,,,2026-04-07,BATCH-P0-DE-001
+美国,北美高购买力区,吸奶器,SEG01,产后建奶新手妈妈,产后0-3月,体验,罩杯不适配; 疼痛,"The flange size was completely wrong for me, caused so much pain and I had to re | FTM here - I've been pumping for a week and it hurts SO BAD. Is this normal?",2,100%,2,Amazon.com; Reddit r/breastfeeding,S2; Spectra,,2026-04-07,BATCH-P0-US-001; BATCH-P0-US-002
+美国,北美高购买力区,吸奶器,SEG01,产后建奶新手妈妈,产后0-3月,功能,吸力下降,"After 2 months the suction dropped significantly, barely gets any milk now",1,100%,1,Amazon.com,,,2026-04-07,BATCH-P0-US-001
+美国,北美高购买力区,吸奶器,SEG02,返岗背奶效率妈妈,产后3-12月,体验,噪音大; 办公室使用尴尬,Way too loud to use at work. My coworkers can hear it through the closed door | I dread pumping at work. The pump room is just a converted closet with thin wall,2,50%,2,Amazon.com; Reddit r/breastfeeding,Elvie,,2026-04-07,BATCH-P0-US-001; BATCH-P0-US-002
+美国,北美高购买力区,吸奶器,SEG02,返岗背奶效率妈妈,产后3-12月,功能,续航短,Battery dies after just 3 pumping sessions. Useless for a full work day,1,0%,1,Amazon.com,,,2026-04-07,BATCH-P0-US-001
+美国,北美高购买力区,吸奶器,SEG03,高频泵奶复购家庭,产后0-12月,价格,配件贵,Replacement parts cost almost as much as the pump itself. Feels like a money tra,1,100%,1,Amazon.com,Medela; Spectra,,2026-04-07,BATCH-P0-US-001
+英国,西欧高信任论坛区,吸奶器,SEG01,产后建奶新手妈妈,产后0-3月,体验,尺码不准,Ordered medium flanges but they're way too big. No sizing guide included at all,1,0%,1,Mumsnet,Medela,,2026-04-07,BATCH-P0-GB-001
+英国,西欧高信任论坛区,吸奶器,SEG01,产后建奶新手妈妈,产后0-3月,功能,吸力不稳,The suction keeps fluctuating - sometimes strong sometimes barely there. Very fr,1,100%,1,Mumsnet,Elvie,,2026-04-07,BATCH-P0-GB-001
+英国,西欧高信任论坛区,吸奶器,SEG03,高频泵奶复购家庭,产后0-12月,功能,吸力衰减,Used it daily for 4 months and the motor is clearly dying. Suction is half what ,1,100%,1,Amazon.co.uk,,,2026-04-07,BATCH-P0-GB-002

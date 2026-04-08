@@ -1,0 +1,11 @@
+Trustpilot Ingest Report - 2026-04-07
+==================================================
+Total reviews collected: 112
+  Elvie: 40
+  Momcozy: 39
+  Medela: 27
+  Willow: 5
+  Lansinoh: 1
+
+Country distribution:
+  美国: 112

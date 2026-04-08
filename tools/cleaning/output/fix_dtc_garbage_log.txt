@@ -1,0 +1,52 @@
+fix_dtc_garbage.py — 2026-04-07T20:12:29.221029
+============================================================
+Input: 368 rows
+Kept: 324 rows
+Removed: 44 rows
+
+  DEL line 285: [pattern:Target URL returned error] Title: 404 Not Found URL Source: https://momcozy.com/products/momcozy-m5-wearabl
+  DEL line 286: [pattern:^!\[Image\s+\d+\]] ![Image 389](https://momcozy.com/cdn/shop/files/NAPPA_seal-2023.png?v=1712916146
+  DEL line 287: [pattern:^!\[Image\s+\d+\]] ![Image 406](https://momcozy.com/cdn/shop/files/NAPPA_seal-2023.png?v=1712916146
+  DEL line 288: [pattern:^30 Days Guarantee] 30 Days Guarantee Learn more We stand behind our products. If you don’t love it,
+  DEL line 289: [pattern:30.Day.+Return Policy] 30-Day No-Reason Return Policy** Momcozy offers a **30-day no-reason return poli
+  DEL line 290: [pattern:Non-Quality Issues\*\*] Non-Quality Issues**: Within 30 days of receipt, unused products may be exchange
+  DEL line 291: [pattern:Quality Issues\*\*.*warranty period] Quality Issues**: If a product is damaged due to quality issues within the warra
+  DEL line 292: [pattern:Target URL returned error] Title: 404 Not Found URL Source: https://momcozy.com/products/momcozy-m9-wearabl
+  DEL line 293: [pattern:Workplace friendly discretion Continue t] Workplace friendly discretion Continue to feed baby when returning to work with 
+  DEL line 294: [pattern:Target URL returned error] Title: 404 Not Found URL Source: https://www.willowpump.com/products/willow-go-w
+  DEL line 295: [pattern:^Support Support\s*\*] Support Support *  *  *  *  *  *
+  DEL line 296: [pattern:Target URL returned error] Title: 404 Not Found URL Source: https://www.willowpump.com/products/willow-360-
+  DEL line 297: [pattern:^Support Support\s*\*] Support Support *  *  *  *  *  *
+  DEL line 298: [pattern:^It.s better to buy on babybrezza\.com] It's better to buy on babybrezza.com ! Lowest Prices Guaranteed ! Exclusive 18 M
+  DEL line 299: [pattern:^It.s better to buy on babybrezza\.com] It's better to buy on babybrezza.com ! Lowest Prices Guaranteed ! Exclusive 18 M
+  DEL line 300: [pattern:Target URL returned error] Title: Something went wrong URL Source: https://www.babybrezza.com/products/baby
+  DEL line 301: [pattern:^Join the conversation\s*\*] Join the conversation *  *  *  *  *  *  *  *  *  *  *  *   Mayborn USA, Inc., 9t
+  DEL line 302: [pattern:Target URL returned error] Title: 404 Not Found URL Source: https://www.tommeetippee.com/en-us/product/made
+  DEL line 303: [pattern:^Join the conversation\s*\*] Join the conversation *  *  *  *  *  *  *  *  *  *  *  *   Mayborn USA, Inc., 9t
+  DEL line 304: [pattern:Target URL returned error] Title: 404 Page Not Found | Bugaboo URL Source: https://www.bugaboo.com/us-en/st
+  DEL line 305: [pattern:^Shopping online\s*\*] Shopping online *  *  *  *  *
+  DEL line 306: [pattern:Buy and try for 100 days] Bugaboo Dragonfly The future city stroller where comfort meets compact ​  Buy an
+  DEL line 307: [pattern:^Shopping online\s*\*] Shopping online *  *  *  *  *
+  DEL line 308: [pattern:Buy and try for 100 days] Why choose Bugaboo Buy and try for 100 days Full refund if not satisfied Extende
+  DEL line 309: [pattern:^Shopping online\s*\*] Shopping online *  *  *  *  *
+  DEL line 310: [pattern:stars\.\s*\d+ reviews \[View product\]] stars. 142 reviews [View product](https://www.medela.us/en-us/breastfeeding-pump
+  DEL line 311: [pattern:stars\.\s*\d+ reviews \[View product\]] stars. 142 reviews [View product](https://www.medela.us/en-us/breastfeeding-pump
+  DEL line 312: [pattern:stars\.\s*\d+ reviews \[View product\]] stars. 142 reviews [View product](https://www.medela.us/en-us/breastfeeding-pump
+  DEL line 313: [pattern:Target URL returned error] Title: Something went wrong URL Source: https://momcozy.com/products/momcozy-s12
+  DEL line 331: [positive_content] Convenient and Effective. These hands-free breast pumps are quiet, compact, and 
+  DEL line 336: [positive_content] Great. Just what I need
+  DEL line 345: [pattern:^URL Source:\s*https?://] URL Source: https://community.whattoexpect.com/forums/january-2023-babies/topic/
+  DEL line 346: [pattern:^Markdown Content:\s*#?\s*\w] Markdown Content: # Elvie is garbage - January 2023 Babies | Forums | What to Ex
+  DEL line 358: [pattern:^Please specify a reason for deleting] Please specify a reason for deleting **Elvie is garbage** from the community. No
+  DEL line 359: [pattern:^\*\s+\*\s+\*\s+\*\s+\*] *  *  *  *  *  *  *  * ! *
+  DEL line 360: [pattern:Reasons Your Baby Won.t Sleep] 11 Reasons Your Baby Won't Sleep Solutions to issues that may be keeping your ba
+  DEL line 361: [pattern:Toddler Refuses to Poop] What to Do if Your Toddler Refuses to Poop You wait, but it's a no-go. What to d
+  DEL line 362: [pattern:^\]\(https?://] ](https://community.whattoexpect.com/forums/january-2023-babies/topic/elvie-is-g
+  DEL line 363: [pattern:Target URL returned error] Warning: Target URL returned error 404: Not Found
+  DEL line 365: [pattern:Cloudflare] Title: Attention Required! | Cloudflare
+  DEL line 366: [pattern:^URL Source:\s*https?://] URL Source: https://www.mumsnet.com/talk/pushchairs_and_prams/4707395-bugaboo-fo
+  DEL line 367: [pattern:Target URL returned error] Warning: Target URL returned error 403: Forbidden Warning: This page maybe requi
+  DEL line 368: [pattern:Cloudflare] You can email the site owner to let them know you were blocked. Please include w
+  DEL line 369: [pattern:^Top mentions\s+Customer service] Top mentions Customer service Product Solution Service Customer communications W
+
+Output: D:\专题2：VOC分析\voc-data-product\data\delivery\tables\dim_voc_negative_extract.csv (324 rows)

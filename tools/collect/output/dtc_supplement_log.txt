@@ -1,0 +1,50 @@
+[START] DTC supplement ingest
+
+===== Phase 1: Momcozy Okendo extra products =====
+  [OKENDO] M6 Mobile Breast Pump ...
+    [FOUND] 28 negative reviews
+  [OKENDO] S12 Pro Wearable Breast Pump ...
+    [FOUND] 0 negative reviews
+  [OKENDO] Kneading Nursing Pillow ...
+    [FOUND] 0 negative reviews
+[Phase 1] Momcozy extra: 28 records
+
+===== Phase 2: Community discussions =====
+  [Elvie] elvie_whattoexpect_garbage.md: 18 negative posts
+  [Elvie] elvie_babycentre_unlucky.md: 0 negative posts
+  [FETCH] https://community.whattoexpect.com/forums/formula-feeding/to...
+    [SAVE] babybrezza_whattoexpect.md (49340 bytes)
+  [Baby Brezza] babybrezza_whattoexpect.md: 7 negative posts
+  [FETCH] https://www.mumsnet.com/talk/pushchairs_and_prams/4707395-bu...
+    [SAVE] bugaboo_mumsnet_issues.md (829 bytes)
+  [Bugaboo] bugaboo_mumsnet_issues.md: 4 negative posts
+  [FETCH] https://community.whattoexpect.com/forums/breastfeeding/topi...
+    [SAVE] willow_whattoexpect.md (49360 bytes)
+  [Willow] willow_whattoexpect.md: 7 negative posts
+  [FETCH] https://www.mumsnet.com/talk/pushchairs_and_prams/4887253-up...
+    [SAVE] uppababy_mumsnet.md (835 bytes)
+  [UPPAbaby] uppababy_mumsnet.md: 4 negative posts
+[Phase 2] Community: 40 records
+
+===== Phase 3: Trustpilot supplements =====
+  [FETCH] https://www.trustpilot.com/review/www.elvie.com?page=3&stars...
+    [SAVE] tp_www_elvie_com_p3.md (22008 bytes)
+  [Elvie] TP page 3: 1 negative reviews
+  [FETCH] https://www.trustpilot.com/review/www.elvie.com?page=4&stars...
+    [SAVE] tp_www_elvie_com_p4.md (22748 bytes)
+  [Elvie] TP page 4: 1 negative reviews
+  [FETCH] https://www.trustpilot.com/review/www.elvie.com?page=5&stars...
+    [SAVE] tp_www_elvie_com_p5.md (27161 bytes)
+  [Elvie] TP page 5: 1 negative reviews
+  [FETCH] https://www.trustpilot.com/review/willowpump.com?page=2&star...
+    [SAVE] tp_willowpump_com_p2.md (4323 bytes)
+  [Willow] TP page 2: 0 negative reviews
+  [FETCH] https://www.trustpilot.com/review/willowpump.com?page=3&star...
+    [SAVE] tp_willowpump_com_p3.md (4323 bytes)
+  [Willow] TP page 3: 0 negative reviews
+[Phase 3] Trustpilot: 3 records
+
+============================================================
+[TOTAL] 71 DTC supplement records
+[APPEND] 25 new rows to CSV
+[DONE] Appended 25 new rows to CSV

@@ -1,0 +1,40 @@
+[
+  {
+    "country_code": "US",
+    "platform": "Amazon.com",
+    "original_text": "The flange size chart is completely wrong. Ordered the recommended size and it was way too big, caused painful suction marks.",
+    "translated_text": "罩杯尺码表完全不准。按推荐尺码购买结果太大了，导致吸出痛苦的吸痕。",
+    "theme": "罩杯尺码不准",
+    "url": "https://www.amazon.com/dp/B0EXAMPLE01/ref=cm_cr_arp_d_rvw_txt",
+    "frequency": 12,
+    "pain_category": "体验",
+    "intensity": "高"
+  },
+  {
+    "country_code": "US",
+    "platform": "Amazon.com",
+    "original_text": "Battery barely lasts 3 sessions. Completely useless for a full work day at the office. Had to buy a second pump.",
+    "translated_text": "电池只能撑3次泵奶。在办公室一整天完全不够用，不得不买第二个。",
+    "theme": "续航不足",
+    "url": "https://www.amazon.com/dp/B0EXAMPLE02/ref=cm_cr_arp_d_rvw_txt",
+    "frequency": 8
+  },
+  {
+    "country_code": "DE",
+    "platform": "Amazon.de",
+    "original_text": "Viel zu laut! Selbst mit geschlossener Tür hören meine Kolleginnen das Gerät. Sehr peinlich im Büro.",
+    "translated_text": "太吵了！即使关了门同事也能听到。在办公室非常尴尬。",
+    "theme": "噪音大",
+    "url": "https://www.amazon.de/dp/B0EXAMPLE03",
+    "frequency": 6
+  },
+  {
+    "country_code": "FR",
+    "platform": "Amazon.fr",
+    "original_text": "Les joints fuient après seulement 2 semaines d'utilisation. Le lait coule partout, c'est un vrai gâchis.",
+    "translated_text": "密封圈使用两周后就漏了。奶漏得到处都是，真是浪费。",
+    "theme": "漏奶/密封差",
+    "url": "https://www.amazon.fr/dp/B0EXAMPLE04",
+    "frequency": 5
+  }
+]

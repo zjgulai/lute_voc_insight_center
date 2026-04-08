@@ -1,0 +1,81 @@
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Intermediate data (large, not site dependency)
+data/processed/
+data/add_data/
+data/inputs/
+data/product_dim/
+data/qa_reports/
+data/templates/
+data/delivery/54国补证backlog/
+data/delivery/TOP20二次升级试点_表格包/
+data/delivery/URL证据表/
+data/delivery/归档索引/
+data/delivery/核心文档/
+data/delivery/_竞品*
+data/delivery/母婴本地化*
+data/delivery/voc_summary_flat.csv
+data/delivery/cfg_top10_platform_entry_扩表计划.md
+data/delivery/tables/_schema/
+data/delivery/tables/voc_negative_summary_report.md
+
+# Legacy / Archive
+archive/
+runtime/
+viz-static/
+config/
+_tmp_list.txt
+
+# Non-core app modules (local-only)
+app/collector/
+app/engine/
+app/tools/
+app/__init__.py
+app/config.py
+
+# Docs (not needed for site)
+docs/
+
+# Build output
+app/dashboard/frontend/out/
+app/dashboard/frontend/.next/
+app/dashboard/frontend/tsconfig.tsbuildinfo
+app/dashboard/frontend/next-env.d.ts
+
+# Scripts (keep only start/stop for reference)
+start-dashboard.ps1
+stop-dashboard.ps1
+
+# delivery extra files
+data/delivery/README.md
+
+# delivery JSON (already in frontend/public/data/)
+data/delivery/viz_dataset.json
+data/delivery/viz_country_insight.json
+data/delivery/viz_opportunity.json
+
+# IDE
+.cursor/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
