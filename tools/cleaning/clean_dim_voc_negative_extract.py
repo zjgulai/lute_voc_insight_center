@@ -11,6 +11,7 @@ from ._common import (
 
 PAIN_CATEGORIES = {"功能", "价格", "体验", "服务", "安全"}
 INTENSITY_VALUES = {"高", "中", "低"}
+EXCLUDED_COMPETITOR_BRANDS = {"多品牌对比"}
 
 
 def build() -> list[dict]:
@@ -50,6 +51,8 @@ def build() -> list[dict]:
             neg_theme = subcat
 
         brand = normalize_brand(r.get("竞品关联品牌"))
+        if brand in EXCLUDED_COMPETITOR_BRANDS:
+            continue
 
         translated = clean_str(r.get("负面原文摘录(中文翻译)"))
         if translated and not is_chinese_text(translated):
