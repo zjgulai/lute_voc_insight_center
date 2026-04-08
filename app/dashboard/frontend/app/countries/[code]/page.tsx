@@ -13,6 +13,7 @@ interface CountryDetail {
   platforms: Record<string, unknown>[];
   keywords: Record<string, unknown>[];
   voc_summary: Record<string, unknown>[];
+  brand_voc_summary?: Record<string, unknown>[];
 }
 
 export default function CountryDetailPage() {
@@ -29,7 +30,7 @@ export default function CountryDetailPage() {
   if (error) return <div className="alert-error">{error}</div>;
   if (!data) return <div className="loading-text">加载 {code} 数据...</div>;
 
-  const { country, personas, purchasing_power, trust_sources, platforms, keywords } = data;
+  const { country, personas, purchasing_power, trust_sources, platforms, keywords, brand_voc_summary } = data;
 
   return (
     <>
@@ -224,6 +225,41 @@ export default function CountryDetailPage() {
                     <td>
                       <span className="badge badge-success">{kw.crawl_priority as string}</span>
                     </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Brand VOC Summary */}
+      {(brand_voc_summary ?? []).length > 0 && (
+        <div className="card">
+          <div className="card-title">品牌 VOC 概览 ({(brand_voc_summary ?? []).length} 条)</div>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>品线</th>
+                  <th>品牌</th>
+                  <th>证据条数</th>
+                  <th>频次合计</th>
+                  <th>高强度占比</th>
+                  <th>Top痛点</th>
+                  <th>Top主题</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(brand_voc_summary ?? []).slice(0, 50).map((row, i) => (
+                  <tr key={i}>
+                    <td>{String(row.product_line ?? "")}</td>
+                    <td className="font-semibold">{String(row.competitor_brand ?? "")}</td>
+                    <td>{Number(row.total_records ?? 0)}</td>
+                    <td>{Number(row.frequency_sum ?? 0)}</td>
+                    <td>{Number(row.high_intensity_pct ?? 0)}%</td>
+                    <td>{String(row.top_pain_category ?? "")}</td>
+                    <td className="text-sm">{String(row.top_negative_themes ?? "")}</td>
                   </tr>
                 ))}
               </tbody>

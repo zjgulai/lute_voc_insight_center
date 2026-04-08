@@ -66,6 +66,9 @@ def get_country_detail(code: str) -> dict | None:
         "voc_summary": [
             vs for vs in ds.get("voc_summary", []) if vs.get("country_code") == code_upper
         ],
+        "brand_voc_summary": [
+            vs for vs in ds.get("brand_voc_summary", []) if vs.get("country_code") == code_upper
+        ],
     }
 
 

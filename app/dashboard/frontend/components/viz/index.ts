@@ -2,6 +2,7 @@ export { default as OverviewSection } from "./OverviewSection";
 export { default as CountriesSection } from "./CountriesSection";
 export { default as Top20Section } from "./Top20Section";
 export { default as ClustersSection } from "./ClustersSection";
+export { default as BrandVOCSection } from "./BrandVOCSection";
 export { default as PersonasSection } from "./PersonasSection";
 export { default as PurchasingSection } from "./PurchasingSection";
 export { default as ProductsSection } from "./ProductsSection";

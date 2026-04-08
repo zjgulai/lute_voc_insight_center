@@ -70,6 +70,12 @@ BRAND_NORMALIZE_MAP: dict[str, str] = {
     "eufy": "Eufy", "bebefun": "Bebefun", "baby buddha": "Baby Buddha",
     "bellababy": "BellaBaby", "lacteck": "Lacteck", "mumma bump": "Mumma Bump",
     "ameda": "Ameda", "motif medical": "Motif Medical", "evenflo": "Evenflo",
+    "babybjorn": "BabyBjorn", "baby bjorn": "BabyBjorn",
+    "dr. brown's": "Dr. Brown's", "dr browns": "Dr. Brown's",
+    "dr. browns": "Dr. Brown's", "dr brown's": "Dr. Brown's",
+    "philips avent uk": "Philips Avent",
+    "uppababy": "UPPAbaby", "jane": "Jané", "jané": "Jané",
+    "pegperego": "Peg Perego",
 }
 
 PAIN_SUBCATEGORY_RULES: dict[str, list[tuple[list[str], str]]] = {

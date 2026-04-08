@@ -7,12 +7,17 @@ from __future__ import annotations
 
 import csv
 import re
+import sys
 import time
 import urllib.request
 from datetime import date
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from tools.collect.brand_scope_config import FROZEN_BRANDS_BY_LINE, TRUSTPILOT_SLUGS
+
 TARGET_CSV = PROJECT_ROOT / "data" / "delivery" / "tables" / "dim_voc_negative_extract.csv"
 OUTPUT_DIR = Path(__file__).parent / "output"
 RAW_DIR = OUTPUT_DIR / "raw_trustpilot"
@@ -36,19 +41,9 @@ COUNTRY_FROM_CODE = {
 }
 
 BRAND_PRODUCT_LINE = {
-    "momcozy": "吸奶器",
-    "elvie": "吸奶器",
-    "willow": "吸奶器",
-    "spectra": "吸奶器",
-    "medela": "吸奶器",
-    "lansinoh": "吸奶器",
-    "philips avent": "喂养电器",
-    "tommee tippee": "喂养电器",
-    "dr. brown's": "喂养电器",
-    "baby brezza": "喂养电器",
-    "bugaboo": "家居出行",
-    "uppababy": "家居出行",
-    "cybex": "家居出行",
+    brand.lower(): product_line
+    for product_line, brands in FROZEN_BRANDS_BY_LINE.items()
+    for brand in brands
 }
 
 PAIN_KEYWORDS = {
@@ -269,13 +264,7 @@ def append_to_csv(rows: list[dict]):
     return len(new_rows)
 
 
-TARGETS = [
-    ("momcozy.com", "Momcozy"),
-    ("elvie.com", "Elvie"),
-    ("willowpump.com", "Willow"),
-    ("medela.com", "Medela"),
-    ("lansinoh.com", "Lansinoh"),
-]
+TARGETS = [(slug, brand) for brand, slug in TRUSTPILOT_SLUGS.items()]
 
 
 def main():

@@ -129,6 +129,7 @@ export interface VizDataset {
   p1_search?: Record<string, unknown>[];
   segments?: Record<string, unknown>[];
   voc_summary: Record<string, unknown>[];
+  brand_voc_summary?: Record<string, unknown>[];
   voc_persona_summary?: Record<string, unknown>[];
   voc_negative?: Record<string, unknown>[];
 }
@@ -185,6 +186,7 @@ export const api = {
         platforms: ds.platforms.filter((p) => (p as Record<string, unknown>).country_code === codeUpper),
         keywords: ds.keywords.filter((k) => (k as Record<string, unknown>).country_code === codeUpper),
         voc_summary: ds.voc_summary.filter((v) => (v as Record<string, unknown>).country_code === codeUpper),
+        brand_voc_summary: (ds.brand_voc_summary ?? []).filter((v) => (v as Record<string, unknown>).country_code === codeUpper),
       };
     }
     return fetchJSON<Record<string, unknown>>(`/api/v1/countries/${code}`);

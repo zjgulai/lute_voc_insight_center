@@ -14,6 +14,11 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from tools.collect.brand_scope_config import DTC_REVIEW_URLS, FROZEN_BRANDS_BY_LINE
+
 LOG_FILE = Path(__file__).parent / "output" / "dtc_ingest_log.txt"
 
 def log(msg: str):
@@ -24,7 +29,6 @@ def log(msg: str):
     except Exception:
         pass
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
 TARGET_CSV = PROJECT_ROOT / "data" / "delivery" / "tables" / "dim_voc_negative_extract.csv"
 OUTPUT_DIR = Path(__file__).parent / "output"
 RAW_DIR = OUTPUT_DIR / "raw_dtc"
@@ -41,82 +45,14 @@ HEADERS_20 = [
 
 DTC_TARGETS = [
     {
-        "brand": "Momcozy",
-        "product_line": "吸奶器",
-        "urls": [
-            "https://momcozy.com/products/momcozy-m5-wearable-breast-pump",
-            "https://momcozy.com/products/momcozy-s12-pro-wearable-breast-pump",
-            "https://momcozy.com/products/momcozy-m9-wearable-breast-pump",
-        ],
-        "platform": "Momcozy官网",
-    },
-    {
-        "brand": "Elvie",
-        "product_line": "吸奶器",
-        "urls": [
-            "https://www.elvie.com/en-us/shop/elvie-pump",
-            "https://www.elvie.com/en-us/shop/elvie-stride",
-        ],
-        "platform": "Elvie官网",
-    },
-    {
-        "brand": "Willow",
-        "product_line": "吸奶器",
-        "urls": [
-            "https://www.willowpump.com/products/willow-go-wearable-breast-pump",
-            "https://www.willowpump.com/products/willow-360-wearable-breast-pump",
-        ],
-        "platform": "Willow官网",
-    },
-    {
-        "brand": "Baby Brezza",
-        "product_line": "喂养电器",
-        "urls": [
-            "https://www.babybrezza.com/products/formula-pro-advanced",
-            "https://www.babybrezza.com/products/bottle-washer-pro",
-            "https://www.babybrezza.com/products/baby-brezza-sterilizer-dryer-advanced",
-        ],
-        "platform": "Baby Brezza官网",
-    },
-    {
-        "brand": "Tommee Tippee",
-        "product_line": "喂养电器",
-        "urls": [
-            "https://www.tommeetippee.com/en-us/product/perfect-prep-machine",
-            "https://www.tommeetippee.com/en-us/product/made-for-me-single-electric-breast-pump",
-        ],
-        "platform": "Tommee Tippee官网",
-    },
-    {
-        "brand": "Bugaboo",
-        "product_line": "家居出行",
-        "urls": [
-            "https://www.bugaboo.com/us-en/strollers/bugaboo-fox5/",
-            "https://www.bugaboo.com/us-en/strollers/bugaboo-dragonfly/",
-            "https://www.bugaboo.com/us-en/strollers/bugaboo-butterfly/",
-        ],
-        "platform": "Bugaboo官网",
-    },
-    {
-        "brand": "UPPAbaby",
-        "product_line": "家居出行",
-        "urls": [
-            "https://uppababy.com/vista/",
-            "https://uppababy.com/cruz/",
-            "https://uppababy.com/minu/",
-        ],
-        "platform": "UPPAbaby官网",
-    },
-    {
-        "brand": "Medela",
-        "product_line": "吸奶器",
-        "urls": [
-            "https://www.medela.us/breastfeeding/products/breast-pumps/freestyle-flex",
-            "https://www.medela.us/breastfeeding/products/breast-pumps/pump-in-style",
-            "https://www.medela.us/breastfeeding/products/breast-pumps/sonata",
-        ],
-        "platform": "Medela官网",
-    },
+        "brand": brand,
+        "product_line": product_line,
+        "urls": DTC_REVIEW_URLS.get(brand, []),
+        "platform": f"{brand}官网",
+    }
+    for product_line, brands in FROZEN_BRANDS_BY_LINE.items()
+    for brand in brands
+    if DTC_REVIEW_URLS.get(brand)
 ]
 
 PAIN_KEYWORDS = {

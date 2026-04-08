@@ -14,6 +14,7 @@ export const COUNTRY_INSIGHT_SECTIONS = [
   { id: "countries", label: "国家全景" },
   { id: "top20", label: "TOP20 深挖" },
   { id: "clusters", label: "区域聚类" },
+  { id: "brand_voc", label: "品牌VOC分析" },
   { id: "personas", label: "用户画像" },
   { id: "segments", label: "客群矩阵" },
   { id: "purchasing", label: "购买力分层" },

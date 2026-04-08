@@ -306,6 +306,74 @@ def build_internal_voc_persona_summary(voc_negative: list[dict]) -> list[dict]:
     )
 
 
+def build_brand_voc_summary(voc_negative: list[dict]) -> list[dict]:
+    """Aggregate brand VOC summary by country/product_line/competitor_brand."""
+    agg: dict[tuple[str, str, str], dict] = {}
+    for r in voc_negative:
+        country = r.get("country", "")
+        country_code = r.get("country_code", "")
+        product_line = r.get("product_line", "")
+        brand = r.get("competitor_brand", "") or "unknown"
+        key = (country_code or country, product_line, brand)
+        if key not in agg:
+            agg[key] = {
+                "country": country,
+                "country_code": country_code,
+                "product_line": product_line,
+                "competitor_brand": brand,
+                "total_records": 0,
+                "frequency_sum": 0,
+                "high_intensity_count": 0,
+                "pain_counter": Counter(),
+                "subcat_counter": Counter(),
+                "theme_counter": Counter(),
+                "platforms": set(),
+                "latest_collect_date": "",
+            }
+        item = agg[key]
+        weight = r.get("frequency", 0) or 1
+        item["total_records"] += 1
+        item["frequency_sum"] += weight
+        if r.get("intensity") == "高":
+            item["high_intensity_count"] += 1
+        pain = r.get("pain_category")
+        if pain:
+            item["pain_counter"][pain] += 1
+        subcat = r.get("pain_subcategory")
+        if subcat and subcat != "其他":
+            item["subcat_counter"][subcat] += 1
+        theme = r.get("negative_theme")
+        if theme:
+            item["theme_counter"][theme] += 1
+        platform = r.get("platform")
+        if platform:
+            item["platforms"].add(platform)
+        collect_date = r.get("collect_date", "") or ""
+        if collect_date and collect_date > item["latest_collect_date"]:
+            item["latest_collect_date"] = collect_date
+
+    result = []
+    for item in agg.values():
+        total_records = item["total_records"]
+        result.append({
+            "country": item["country"],
+            "country_code": item["country_code"],
+            "product_line": item["product_line"],
+            "competitor_brand": item["competitor_brand"],
+            "total_records": total_records,
+            "frequency_sum": item["frequency_sum"],
+            "high_intensity_count": item["high_intensity_count"],
+            "high_intensity_pct": round(item["high_intensity_count"] / total_records * 100, 1) if total_records > 0 else 0,
+            "top_pain_category": (item["pain_counter"].most_common(1)[0][0] if item["pain_counter"] else ""),
+            "top_pain_subcategories": ";".join(name for name, _ in item["subcat_counter"].most_common(3)),
+            "top_negative_themes": ";".join(name for name, _ in item["theme_counter"].most_common(3)),
+            "platform_coverage_cnt": len(item["platforms"]),
+            "latest_collect_date": item["latest_collect_date"],
+        })
+
+    return sorted(result, key=lambda x: (x["country_code"] or x["country"], x["product_line"], -x["total_records"]))
+
+
 def main():
     print("Building sections from CSV files...")
 
@@ -378,6 +446,10 @@ def main():
     print(f"  voc_summary_internal: {len(internal_voc_summary)} rows")
     internal_voc_persona_summary = build_internal_voc_persona_summary(internal_voc_negative)
     print(f"  voc_persona_summary_internal: {len(internal_voc_persona_summary)} rows")
+    brand_voc_summary = build_brand_voc_summary(public_voc_negative)
+    print(f"  brand_voc_summary_public: {len(brand_voc_summary)} rows")
+    brand_voc_summary_internal = build_brand_voc_summary(internal_voc_negative)
+    print(f"  brand_voc_summary_internal: {len(brand_voc_summary_internal)} rows")
 
     now = datetime.now(timezone.utc).isoformat()
     base_meta = {
@@ -399,6 +471,7 @@ def main():
         "keywords": keywords,
         "platforms": platforms,
         "voc_summary": voc_summary,
+        "brand_voc_summary": brand_voc_summary,
     }
 
     opportunity = {
@@ -408,6 +481,7 @@ def main():
         "voc_summary": voc_summary,
         "voc_persona_summary": voc_persona_summary,
         "voc_negative": public_voc_negative,
+        "brand_voc_summary": brand_voc_summary,
         "p1_search": p1_search,
         "voc_timeline": voc_timeline,
         "competitor_ingest_meta": competitor_meta,
@@ -420,6 +494,7 @@ def main():
         "voc_summary": internal_voc_summary,
         "voc_persona_summary": internal_voc_persona_summary,
         "voc_negative": internal_voc_negative,
+        "brand_voc_summary": brand_voc_summary_internal,
         "p1_search": p1_search,
         "voc_timeline": voc_timeline_internal,
         "internal_ingest_meta": internal_meta,
@@ -441,6 +516,7 @@ def main():
         "voc_summary": voc_summary,
         "voc_persona_summary": voc_persona_summary,
         "voc_negative": voc_negative,
+        "brand_voc_summary": build_brand_voc_summary(voc_negative),
         "voc_timeline": build_voc_timeline(voc_negative),
         "competitor_ingest_meta": competitor_meta,
     }

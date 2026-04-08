@@ -28,19 +28,14 @@ from pathlib import Path
 PROJ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJ))
 
+from tools.collect.brand_scope_config import REDDIT_FILENAME_BRAND_HINT
+
 ZIP_PATH = PROJ / "data" / "add_data" / "01_raw_competitor.zip"
 TARGET_CSV = PROJ / "data" / "delivery" / "tables" / "dim_voc_negative_extract.csv"
 STAGING_JSON = PROJ / "data" / "processed" / "competitor_reddit_staging.json"
 BATCH_CODE = f"COMP-REDDIT-{datetime.now().strftime('%Y%m%d')}"
 
-BRAND_FROM_FILENAME: dict[str, str] = {
-    "reddit_elvie_merged.xlsx": "Elvie",
-    "reddit_lansinoh_merged.xlsx": "Lansinoh",
-    "reddit_willow_merged.xlsx": "Willow",
-    "reddit_medela_merged.xlsx": "Medela",
-    "reddit_spectra_merged.xlsx": "Spectra",
-    "reddit_compare_merged.xlsx": "__compare__",
-}
+BRAND_FROM_FILENAME: dict[str, str] = REDDIT_FILENAME_BRAND_HINT
 
 CSV_20_HEADERS = [
     "国家", "区域cluster", "产品品线", "平台类型", "平台",
